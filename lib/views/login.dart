@@ -1,51 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import '../views/browser.dart';
-import '../main.dart' as main;
+import 'package:shared_preferences/shared_preferences.dart';
 
+/// LoginPage class
+/// StatefulWidget class
 class LoginPage extends StatefulWidget {
-  @override
-  State createState() => new LoginPageState();
+    @override
+    State createState() => new LoginPageState();
 }
 
-class LoginPageState extends State<LoginPage>
-    with SingleTickerProviderStateMixin {
+/// LoginPageState class
+/// Extended class state
+class LoginPageState extends State<LoginPage> with SingleTickerProviderStateMixin {
     final flutterWebViewPlugin = FlutterWebviewPlugin();
-    String url = "https://api.imgur.com/oauth2/authorize?client_id=9f0153451f88a91&response_type=token";
+    final String url = "https://api.imgur.com/oauth2/authorize?client_id=9f0153451f88a91&response_type=token";
 
-  Widget build(BuildContext context) {
-    flutterWebViewPlugin.onUrlChanged.listen((url) {
-      if (mounted) {
-        print("Current URL: $url");
-        List<String> l = url.split("#");
-        List<String> tmp;
-        int i = -1;
-        l = l[1].split("&");
-        while(++i < l.length) {
-          tmp = l[i].split("=");
-          if (i == 0)
-            main.acces_token = tmp[1];
-          if (i == 3)
-            main.refresh_token = tmp[1];
-          if (i == 5)
-            main.account_id = tmp[1];
-          if (i == 4)
-            main.account_username = tmp[1];
-        }
-        main.header = {"Authorization": "Bearer " + main.acces_token};
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BrowserView()),
+    /// Configure listeners on webview creation
+    @override
+    void initState() {
+        flutterWebViewPlugin.onUrlChanged.listen(this.onURLChanged);
+
+        // Check if prefs already exists
+        SharedPreferences.getInstance().then((prefs) {
+            if (prefs.containsKey("account_id")) {
+                flutterWebViewPlugin.stopLoading();
+                flutterWebViewPlugin.close();
+
+                // Redirect to dashboard route
+                Navigator.of(context).pushReplacementNamed('/dashboard');
+            }
+        });
+
+        // Call parent state
+        super.initState();
+    }
+
+    /// Destroy webview when widget is closed
+    @override
+    void dispose() {
+        super.dispose();
+        flutterWebViewPlugin.dispose();
+    }
+
+    /// On URL in webview is changed
+    void onURLChanged(url) async {
+        SharedPreferences.getInstance().then((prefs) {
+            if (mounted && url.toString().startsWith("https://app.getpostman.com/oauth2/callback#")) {
+                Map<String, String> queries = Uri.splitQueryString(url.toString().replaceAll("https://app.getpostman.com/oauth2/callback#", ""));
+                prefs.setString("access_token", queries["access_token"]);
+                prefs.setString("expires_in", queries["expires_in"]);
+                prefs.setString("refresh_token", queries["refresh_token"]);
+                prefs.setString("account_username", queries["account_username"]);
+                prefs.setString("account_id", queries["account_id"]);
+
+                // Important to close webview, and redirect to dashboard view
+                flutterWebViewPlugin.close();
+                Navigator.of(context).pushReplacementNamed('/dashboard');
+            }
+        });
+    }
+
+    /// Build widget
+    @override
+    Widget build(BuildContext context) {
+        return new SafeArea(
+            child: WebviewScaffold(
+                url: url,
+                appCacheEnabled: false,
+                clearCookies: true,
+                clearCache: true,
+                withJavascript: true,
+            )
         );
-      }
-    });
-    return WebviewScaffold(
-      appBar: AppBar(
-      ),
-      url: url,
-    );
-
-  }
+    }
 }

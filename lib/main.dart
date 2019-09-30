@@ -1,26 +1,28 @@
+import 'package:epicture/views/home.dart';
+import 'package:epicture/views/login.dart';
+import 'package:epicture/views/splashscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'views/home.dart';
-import 'views/login.dart';
 
-String acces_token;
-String refresh_token;
-String account_username;
-String account_id;
-Map<String, String> header;
 
-void main() {
-  runApp(new MyApp());
-}
+/// Application starter class
+/// Stateless Widget
+class Epicture extends StatelessWidget {
 
-class MyApp extends StatelessWidget {
-
+  /// Build widget
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
       theme: new ThemeData(primarySwatch: Colors.blue),
-      home: new RedirectionPage(),
+      home: new SplashScreen(),
+      routes: {
+        '/login': (context) => new LoginPage(),
+        '/dashboard': (context) => new Home()
+      },
+      debugShowCheckedModeBanner: false,
     );
   }
+
 }
+
+/// Start main and build application
+void main() => runApp(new Epicture());
