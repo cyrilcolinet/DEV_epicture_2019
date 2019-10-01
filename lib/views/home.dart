@@ -5,6 +5,7 @@ import 'package:epicture/components/layout.dart';
 import 'package:epicture/request/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Home class
 /// Statefull with state
@@ -29,8 +30,9 @@ class _HomeState extends State<Home> {
     // Configure controller
     PageController _controller;
 
-    void getViralUrls() {
-        var request = getRequest("https://api.imgur.com/3/gallery/hot/viral/day/0", "data");
+    void getViralUrls(String section, String sort, String window, String page) {
+        String url = "https://api.imgur.com/3/gallery/" + section + "/" + sort + "/" + window + "/" + page;
+        var request = getRequest(url, "data");
         request.then((values) {
             values["data"].forEach((image) {
                 debugPrint(image['link']);
@@ -58,7 +60,7 @@ class _HomeState extends State<Home> {
 
     @override
     void initState() {
-        getViralUrls();
+        getViralUrls("hot", "viral", "day", "0");
         super.initState();
     }
 
