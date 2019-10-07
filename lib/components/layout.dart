@@ -1,11 +1,11 @@
 import 'package:epicture/components/customIcons.dart';
 import 'package:flutter/material.dart';
+import 'Drawer.dart';
 
 /// Header component
 /// Must be integrated in all routes
 class Layout extends StatelessWidget {
     final Widget content;
-
     // Constructor
     Layout(this.content);
 
@@ -25,6 +25,7 @@ class Layout extends StatelessWidget {
                 )
             ),
             child: Scaffold(
+                drawer: new SlideMenu(),
                 backgroundColor: Colors.transparent,
                 body: SingleChildScrollView(
                     child: Column(
