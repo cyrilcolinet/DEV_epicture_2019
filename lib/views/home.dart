@@ -5,7 +5,7 @@ import 'package:epicture/components/layout.dart';
 import 'package:epicture/request/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:camera/camera.dart';
 
 /// Home class
 /// Statefull with state
@@ -83,7 +83,6 @@ class _HomeState extends State<Home> {
                 ),
             );
         }
-
         // Content loaded and images available
         return Column(
             children: <Widget>[

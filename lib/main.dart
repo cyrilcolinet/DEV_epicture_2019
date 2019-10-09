@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:epicture/views/home.dart';
 import 'package:epicture/views/login.dart';
+import 'package:epicture/views/Account.dart';
 import 'package:epicture/views/splashscreen.dart';
-import 'package:flutter/material.dart';
+import 'package:epicture/views/cameraController.dart';
+
 
 
 /// Application starter class
@@ -16,7 +19,8 @@ class Epicture extends StatelessWidget {
       home: new SplashScreen(),
       routes: {
         '/login': (context) => new LoginPage(),
-        '/dashboard': (context) => new Home()
+        '/dashboard': (context) => new Home(),
+        '/account': (context) => new AccountView()
       },
       debugShowCheckedModeBanner: false,
     );
