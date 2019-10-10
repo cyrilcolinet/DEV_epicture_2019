@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:epicture/request/request.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {
@@ -18,6 +19,14 @@ class TakePictureScreen extends StatefulWidget {
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
+}
+
+Map CreateBodyForUpload(String EncodedPicture) {
+  Map body = {
+  'image': EncodedPicture
+  };
+
+  return (body);
 }
 
 class TakePictureScreenState extends State<TakePictureScreen> {
@@ -51,6 +60,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Take a picture')),
+      backgroundColor: Color(0xFF1b1e44),
       // Wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner
       // until the controller has finished initializing.
@@ -111,12 +121,15 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 }
 
-String convertImg(File path) {
+Map convertImg(File path) {
+  Map body = {};
   List<int> imageBytes = path.readAsBytesSync();
   print(imageBytes);
   String test = base64Encode(imageBytes);
-  print(test);
-  return "";
+  //print(test);
+  body = CreateBodyForUpload(test);
+  //print(test);
+  return body;
 }
 // A widget that displays the picture taken by the user.
 class DisplayPictureScreen extends StatelessWidget {
@@ -127,28 +140,35 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
+      appBar: AppBar(
+          title: Text('Display the Picture'),
+          backgroundColor: Color(0xFF1b1e44),
+      ),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
       body: Column(
         children: <Widget>[
           Image.file(File(imagePath)),
-          Text(convertImg(File(imagePath))),
           Align(
             alignment: Alignment.centerRight,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 RaisedButton(
-                    padding: EdgeInsets.all(0.0),
-                    onPressed: () {},
+                    padding: EdgeInsets.all(50.0),
+                    onPressed: () {
+                      postRequest("https://api.imgur.com/3/upload", isAnonymousRequest:false, json:convertImg(File(imagePath)));
+                      Navigator.of(context).pushReplacementNamed('/dashboard');
+                    },
                     color: Colors.blueAccent,
                     splashColor: Colors.white70,
                     child: Icon(Icons.share, color: Colors.white70,)
                 ),
                 RaisedButton(
-                    padding: EdgeInsets.all(0.0),
-                    onPressed: () {},
+                    padding: EdgeInsets.all(50.0),
+                    onPressed: () {
+
+                    },
                     color: Colors.redAccent,
                     splashColor: Colors.white70,
                     child: Icon(Icons.cancel, color: Colors.white70,)

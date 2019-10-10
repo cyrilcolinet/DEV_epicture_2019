@@ -47,7 +47,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                 ),
                                 SizedBox(width: 15),
                                 IconButton(
-                                    icon: Icon(Icons.thumb_up),
+                                    icon: Icon(Icons.favorite),
                                     color: Colors.white,
                                     onPressed: this.goToMenu,
                                 ),

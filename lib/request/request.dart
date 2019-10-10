@@ -44,24 +44,34 @@ Future<Map<String, dynamic>> getRequest(String url, String section) async {
     return json.decode(response.body);
 }
 
-Future<String> postRequest(String url, {bool isAnonymousRequest = false, String json = ""}) async {
+Future<String> postRequest(String url, {bool isAnonymousRequest = false, Map json}) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
+    print("doing request");
+    print(json);
     if (!isAnonymousRequest) {
         final response = await http.post(url, headers: {
-            'Authorization': 'Bearer ' + prefs.getString("access_token")
+            'Authorization': 'Bearer ' + prefs.getString("access_token"),
         }, body: json
         );
-        if (response.statusCode == 200)
+        if (response.statusCode == 200) {
+            print(response.statusCode);
             return response.body;
+        }
+        print(response.statusCode);
+        print(response.reasonPhrase);
         return "request failed";
     } else {
         final response = await http.post(url, headers: {
             'Authorization': 'Client-ID 9f0153451f88a91'
         }, body: json
         );
-        if (response.statusCode == 200)
+        if (response.statusCode == 200) {
+            print(response.statusCode);
             return response.body;
+        }
+        print(response.statusCode);
+        print(response.reasonPhrase);
         return "request failed";
     }
 }
