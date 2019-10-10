@@ -1,9 +1,7 @@
+import 'package:epicture/pages/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:epicture/views/home.dart';
-import 'package:epicture/views/login.dart';
-import 'package:epicture/views/Account.dart';
-import 'package:epicture/views/splashscreen.dart';
-import 'package:epicture/views/cameraController.dart';
+import 'package:epicture/pages/login.dart';
+import 'package:epicture/pages/splashscreen.dart';
 
 /// Application starter class
 /// Stateless Widget
@@ -15,12 +13,12 @@ class Epicture extends StatelessWidget {
     return new MaterialApp(
       theme: new ThemeData(primarySwatch: Colors.blue),
       home: new SplashScreen(),
-      routes: {
-        '/login': (context) => new LoginPage(),
-        '/dashboard': (context) => new Home(),
-        '/account': (context) => new AccountView()
-      },
       debugShowCheckedModeBanner: false,
+      title: 'Epicture',
+      routes: {
+          '/login': (context) => Login(),
+          '/dashboard': (context) => new Dashboard()
+      },
     );
   }
 

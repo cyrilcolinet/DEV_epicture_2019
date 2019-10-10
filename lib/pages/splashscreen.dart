@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// SplashScreen class
 /// Stateful Widget
@@ -12,15 +13,24 @@ class SplashScreen extends StatefulWidget {
 /// Configure state
 class _SplashScreenState extends State<SplashScreen> {
 
-    /// Start timer splashscreen
+    /// Start timer splash screen
     startTime() async {
-        var _duration = new Duration(seconds: 4);
+        var _duration = new Duration(seconds: 5);
         return new Timer(_duration, navigationPage);
     }
 
     /// Navigate to route
     void navigationPage() {
-        Navigator.of(context).pushReplacementNamed('/login');
+        SharedPreferences.getInstance().then((prefs) {
+            if (prefs.containsKey("account_id")) {
+                // Redirect to dashboard route
+                Navigator.of(context).pushReplacementNamed('/dashboard');
+                return;
+            }
+
+            // Not connected, redirect to login page
+            Navigator.of(context).pushReplacementNamed('/login');
+        });
     }
 
     /// When state is started
@@ -30,7 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
         startTime();
     }
 
-    /// Buld widget
+    /// Build widget
     @override
     Widget build(BuildContext context) {
         return Container(

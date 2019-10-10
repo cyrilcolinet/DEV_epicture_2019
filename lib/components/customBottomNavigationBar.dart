@@ -25,7 +25,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
             floatingActionButton: FloatingActionButton.extended(
                 elevation: 4.0,
                 icon: const Icon(Icons.photo_camera),
-                label: const Text('Add photo'),
+                label: const Text('Upload'),
                 backgroundColor: Colors.green,
                 onPressed: this.addNewPhoto,
             ),

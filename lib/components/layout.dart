@@ -5,7 +5,12 @@ import 'Drawer.dart';
 /// Header component
 /// Must be integrated in all routes
 class Layout extends StatelessWidget {
+
+    // Configure default values
     final Widget body;
+
+    // Class variables
+    int selectedPage = 0;
 
     // Constructor
     Layout({this.body});
@@ -30,14 +35,17 @@ class Layout extends StatelessWidget {
                     drawer: new SlideMenu(),
                     backgroundColor: Colors.transparent,
                     body: SafeArea(
-                        child: SingleChildScrollView(
-                            child: Column(
-                                children: <Widget>[this.body],
-                            ),
-                        ),
+                        key: Key('layout'),
+                        child: this.body
                     )
                 ),
             ),
         );
     }
 }
+
+//SingleChildScrollView(
+//                            child: Column(
+//                                children: <Widget>[this.body],
+//                            ),
+//                        )
