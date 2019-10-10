@@ -5,8 +5,6 @@ import 'package:epicture/views/Account.dart';
 import 'package:epicture/views/splashscreen.dart';
 import 'package:epicture/views/cameraController.dart';
 
-
-
 /// Application starter class
 /// Stateless Widget
 class Epicture extends StatelessWidget {
