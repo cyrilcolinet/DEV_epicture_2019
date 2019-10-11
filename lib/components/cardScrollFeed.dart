@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:epicture/request/request.dart';
 
 /// CardScrollFeed class
 /// Stateless Widget extended
@@ -74,7 +75,12 @@ class CardScrollFeed extends StatelessWidget {
                                                             // Like button
                                                             InkWell(
                                                                 onTap: () {
-
+                                                                    String tmp = this.images[index];
+                                                                    String url = "https://api.imgur.com/3/image/";
+                                                                    tmp = tmp.replaceAll("https://i.imgur.com/", "");
+                                                                    url += tmp.split('.')[0];
+                                                                    url += "/favorite";
+                                                                    postRequest(url);
                                                                 },
                                                                 child: Container(
                                                                     padding: EdgeInsets.symmetric(
@@ -128,8 +134,6 @@ class CardScrollFeed extends StatelessWidget {
                                         ),
                                     )
                                 )
-
-
                             ],
                         ),
                     );
