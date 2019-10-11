@@ -1,3 +1,4 @@
+import 'package:epicture/pages/account.dart';
 import 'package:epicture/pages/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:epicture/pages/login.dart';
@@ -17,7 +18,8 @@ class Epicture extends StatelessWidget {
       title: 'Epicture',
       routes: {
           '/login': (context) => Login(),
-          '/dashboard': (context) => new Dashboard()
+          '/dashboard': (context) => new Dashboard(),
+          '/account': (context) => new Account()
       },
     );
   }

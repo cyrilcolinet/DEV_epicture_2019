@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
 
+    // Class variables
     final Widget child;
 
+    /// CustomBottomNavigationBar constructor
     CustomBottomNavigationBar({this.child});
+
+    /// Emulate navigation and change current child
+    void changeChildContent(Widget newChild) {
+
+    }
 
     void addNewPhoto() {
 
@@ -42,8 +49,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                 SizedBox(width: 15),
                                 IconButton(
                                     icon: Icon(Icons.people),
-                                    color: Colors.white,
-                                    onPressed: this.goToMenu,
+                                    color: ModalRoute.of(context).settings.name == '/account' ? Colors.green : Colors.white,
+                                    onPressed: () {
+                                        if (ModalRoute.of(context).settings.name != '/account')
+                                            Navigator.of(context).pushNamed('/account');
+                                    },
                                 ),
                                 SizedBox(width: 15),
                                 IconButton(

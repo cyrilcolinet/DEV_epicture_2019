@@ -38,6 +38,9 @@ class _SplashScreenState extends State<SplashScreen> {
     void initState() {
         super.initState();
         startTime();
+
+        // TODO: Only debugging
+        //SharedPreferences.getInstance().then((prefs) => prefs.clear());
     }
 
     /// Build widget
