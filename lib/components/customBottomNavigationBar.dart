@@ -17,8 +17,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
     }
 
-    void goToMenu() {
-
+    void goToMenu(BuildContext context) {
     }
 
     void searchImage() {
@@ -58,8 +57,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                 SizedBox(width: 15),
                                 IconButton(
                                     icon: Icon(Icons.favorite),
-                                    color: Colors.white,
-                                    onPressed: this.goToMenu,
+                                    color: ModalRoute.of(context).settings.name == '/fav' ? Colors.green : Colors.white,
+                                    onPressed: () {
+                                        Navigator.of(context).pushReplacementNamed("/fav");
+                                    }
                                 ),
                             ],
                         ),

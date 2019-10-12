@@ -75,12 +75,18 @@ class CardScrollFeed extends StatelessWidget {
                                                             // Like button
                                                             InkWell(
                                                                 onTap: () {
-                                                                    String tmp = this.images[index];
-                                                                    String url = "https://api.imgur.com/3/image/";
-                                                                    tmp = tmp.replaceAll("https://i.imgur.com/", "");
-                                                                    url += tmp.split('.')[0];
-                                                                    url += "/favorite";
-                                                                    postRequest(url);
+                                                                    if (ModalRoute.of(context).settings.name != '/fav') {
+                                                                        String tmp = this.images[index];
+                                                                        String url = "https://api.imgur.com/3/image/";
+                                                                        tmp = tmp.replaceAll(
+                                                                            "https://i.imgur.com/",
+                                                                            "");
+                                                                        url += tmp.split('.')[0];
+                                                                        url += "/favorite";
+                                                                        postRequest(url);
+                                                                    } else {
+
+                                                                    }
                                                                 },
                                                                 child: Container(
                                                                     padding: EdgeInsets.symmetric(
@@ -91,7 +97,8 @@ class CardScrollFeed extends StatelessWidget {
                                                                         color: Colors.redAccent,
                                                                         borderRadius: BorderRadius.circular(20.0)
                                                                     ),
-                                                                    child: Text("Like",
+                                                                    child: Text(
+                                                                        ModalRoute.of(context).settings.name == '/fav' ? "Dislike" : "Like",
                                                                         style: TextStyle(
                                                                             color: Colors.white,
                                                                             fontSize: 16,

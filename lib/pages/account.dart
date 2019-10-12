@@ -4,6 +4,7 @@ import 'package:epicture/request/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:epicture/components/cardScrollFeed.dart';
 
 /// Account class
 /// Stateful widget extend
@@ -14,8 +15,52 @@ class Account extends StatefulWidget {
 
 /// Account state configuration
 class _Account extends State<Account> {
-    bool loaded = false;
+    bool loadedData = false;
+    bool loadedPic = false;
     User userData;
+    List<String> images = [];
+    List<String> titles = [];
+    PageController _controller;
+    var currentPage;
+
+    void getUserUploadedPic() {
+        String url ="https://api.imgur.com/3/account/me/images";
+        Future<Map<String, dynamic>> request = getRequest(url, "data");
+        List<String> tmpImages = [];
+        List<String> tmpTitles = [];
+
+        // Wait for request result
+        request.then((data) {
+            List<dynamic> values = data["data"];
+            print("request result");
+            print(values);
+            values.where((item) => item["link"] != null).forEach((pic) {
+                if (pic['link'] != null && pic['type'].toString().startsWith("image")) {
+                    tmpImages.add(pic['link']);
+                    if (pic['title'] != null)
+                        tmpTitles.add(pic['title']);
+                    else
+                        tmpTitles.add("Untitled");
+                }
+            });
+
+            // Configure controller
+            _controller = PageController(initialPage: tmpImages.length - 1);
+            _controller.addListener(() {
+                setState(() {
+                    currentPage = _controller.page;
+                });
+            });
+
+            // Change and set state to loaded
+            setState(() {
+                this.currentPage = tmpImages.length - 1.0;
+                this.images = tmpImages.toList();
+                this.titles = tmpTitles.toList();
+                this.loadedPic = true;
+            });
+        });
+    }
 
     void getAccountSettings() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -25,7 +70,7 @@ class _Account extends State<Account> {
         // Parse value and add it to object
         request.then((data) => this.setState(() {
             userData = User.fromJson(data['data']);
-            loaded = true;
+            loadedData = true;
         }));
     }
 
@@ -34,6 +79,7 @@ class _Account extends State<Account> {
     void initState() {
         super.initState();
         this.getAccountSettings();
+        this.getUserUploadedPic();
     }
 
     /// Build account content
@@ -44,7 +90,7 @@ class _Account extends State<Account> {
 
     /// Display content of widget
     Widget displayContent() {
-        if (!loaded) {
+        if (!loadedData || !loadedPic) {
             return SizedBox(
                 height: MediaQuery.of(context).size.height - 130,
                 child: SpinKitFadingCube(
@@ -148,7 +194,11 @@ class _Account extends State<Account> {
                                 )
                             ],
                         ),
-                    )
+                    ),
+                    CardScrollFeed(
+                        images: this.images,
+                        titles: this.titles
+                    ),
                 ],
             ),
         );
