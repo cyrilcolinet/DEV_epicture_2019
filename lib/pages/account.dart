@@ -1,3 +1,4 @@
+import 'package:epicture/components/buttons/goToHomeButton.dart';
 import 'package:epicture/components/layout.dart';
 import 'package:epicture/objects/user.dart';
 import 'package:epicture/request/request.dart';
@@ -64,7 +65,7 @@ class _Account extends State<Account> {
 
     void getAccountSettings() async {
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String url = "https://api.imgur.com/3/account/" + prefs.getString("account_username");
+        String url = "/account/" + prefs.getString("account_username");
         Future<Map<String, dynamic>> request = getRequest(url, "data");
 
         // Parse value and add it to object
@@ -108,6 +109,7 @@ class _Account extends State<Account> {
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
+                                GoToHomeButton(),
                                 Text("Account",
                                     style: TextStyle(
                                         color: Colors.white,
@@ -195,10 +197,10 @@ class _Account extends State<Account> {
                             ],
                         ),
                     ),
-                    CardScrollFeed(
+                    /*CardScrollFeed(
                         images: this.images,
                         titles: this.titles
-                    ),
+                    ),*/
                 ],
             ),
         );

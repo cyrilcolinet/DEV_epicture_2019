@@ -28,13 +28,15 @@ class Post {
     }
 }
 
+String baseUrl = "https://api.imgur.com/3";
+
 /// Get request from url
 /// Return future of data
 Future<Map<String, dynamic>> getRequest(String url, String section) async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // Call request with corresponded headers
-    final response = await http.get(url,
+    final response = await http.get(baseUrl + url,
         headers: {
             'Authorization': 'Bearer ' + prefs.getString("access_token")
         },
@@ -55,7 +57,7 @@ Future<String> postRequest(String url, {bool isAnonymousRequest = false, Map jso
     print("doing request");
     print(json);
     if (!isAnonymousRequest) {
-        final response = await http.post(url, headers: {
+        final response = await http.post(baseUrl + url, headers: {
             'Authorization': 'Bearer ' + prefs.getString("access_token"),
         }, body: json
         );
@@ -67,7 +69,7 @@ Future<String> postRequest(String url, {bool isAnonymousRequest = false, Map jso
         print(response.reasonPhrase);
         return "request failed";
     } else {
-        final response = await http.post(url, headers: {
+        final response = await http.post(baseUrl + url, headers: {
             'Authorization': 'Client-ID 9f0153451f88a91'
         }, body: json
         );
@@ -85,7 +87,7 @@ Future<String> putRequest(String url, {bool isAnonymousRequest = false, String j
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (!isAnonymousRequest) {
-        final response = await http.post(url, headers: {
+        final response = await http.post(baseUrl + url, headers: {
             'Authorization': 'Bearer ' + prefs.getString("access_token")
         }, body: json
         );
@@ -94,7 +96,7 @@ Future<String> putRequest(String url, {bool isAnonymousRequest = false, String j
             return response.body;
         return "request failed";
     } else {
-        final response = await http.post(url, headers: {
+        final response = await http.post(baseUrl + url, headers: {
             'Authorization': 'Client-ID 9f0153451f88a91'
         }, body: json
         );

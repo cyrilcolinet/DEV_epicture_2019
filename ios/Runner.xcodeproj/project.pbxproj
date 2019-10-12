@@ -145,7 +145,6 @@
 				EC82A0A0862F70A2FF61EE6D /* Pods-Runner.release.xcconfig */,
 				3C806C7A8D3163FFEFD8458D /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -390,8 +389,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.epicture;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.epitech.colinet-lenzi.epicture";
+				PRODUCT_NAME = Runner;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
@@ -516,8 +515,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.epicture;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.epitech.colinet-lenzi.epicture";
+				PRODUCT_NAME = Runner;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -540,8 +539,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Flutter",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.epitech.epicture;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = "eu.epitech.colinet-lenzi.epicture";
+				PRODUCT_NAME = Runner;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

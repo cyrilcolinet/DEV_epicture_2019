@@ -1,7 +1,6 @@
 import 'package:epicture/components/cardScrollFeed.dart';
-import 'package:epicture/components/cardScroller.dart';
-import 'package:epicture/components/customIcons.dart';
 import 'package:epicture/components/layout.dart';
+import 'package:epicture/objects/image.dart' as object;
 import 'package:epicture/request/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,50 +12,41 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
 
-    // Configure controller
-    PageController _controller;
-
-    var currentPage;
-    var loaded = false;
+    bool loaded = false;
 
     // Class variables
-    List<String> images = [];
+    List<object.Image> images = [];
     List<String> titles = [];
 
     /// Get viral links from API
     void getViralUrls(String section, String sort, String window, String page) {
-        String url = "https://api.imgur.com/3/gallery/" + section + "/" + sort + "/" + window + "/" + page;
+        String url = "/gallery/" + section + "/" + sort + "/" + window + "/" + page;
         Future<Map<String, dynamic>> request = getRequest(url, "data");
-        List<String> tmpImages = [];
-        List<String> tmpTitles = [];
+        List<object.Image> tmpImages = [];
 
         // Wait for request result
         request.then((data) {
             List<dynamic> values = data["data"];
-            values.where((item) => item['images'] != null).forEach((image) {
-                List<dynamic> listImg = image['images'];
+            values.where((item) => item['images'] != null).forEach((tmp) {
+                object.Image image = object.Image.fromJson(tmp);
+                
+                // Check for valid type of codec
+                if (image.images[0].type.startsWith("image")) {
+                    image.link = image.images[0].link;
+                    tmpImages.add(image);
+                }
+                /*List<dynamic> listImg = image['images'];
 
                 // Add to images list
                 if (listImg[0]['link'] != null && image['title'] != null
                     && listImg[0]['type'].toString().startsWith("image")) {
                     tmpImages.add(listImg[0]['link']);
-                    tmpTitles.add(image['title']);
-                }
-            });
-
-            // Configure controller
-            _controller = PageController(initialPage: tmpImages.length - 1);
-            _controller.addListener(() {
-                setState(() {
-                    currentPage = _controller.page;
-                });
+                }*/
             });
 
             // Change and set state to loaded
             setState(() {
-                this.currentPage = tmpImages.length - 1.0;
-                this.images = tmpImages.toList();
-                this.titles = tmpTitles.toList();
+                this.images = tmpImages;
                 this.loaded = true;
             });
         });
@@ -109,10 +99,7 @@ class _DashboardState extends State<Dashboard> {
                             ],
                         ),
                     ),
-                    CardScrollFeed(
-                        images: this.images,
-                        titles: this.titles
-                    ),
+                    CardScrollFeed(images: this.images),
                 ],
             ),
         );
