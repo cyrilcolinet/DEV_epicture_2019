@@ -70,8 +70,31 @@ class CardScrollFeed extends StatelessWidget {
                                                     )
                                                 ),
 
-                                                // Ups and downs
-                                                FavButton(image: images[index]),
+                                                Row(
+                                                    children: <Widget>[
+                                                        // Favourites
+                                                        Padding(
+                                                            padding: EdgeInsets.only(right: 15),
+                                                            child: FavButton(image: images[index])
+                                                        ),
+
+                                                        // User
+                                                        FlatButton.icon(
+                                                            icon: Icon(Icons.people,
+                                                                size: 25,
+                                                                color: Colors.grey,
+                                                            ),
+                                                            label: Text(images[index].accountUrl,
+                                                                style: TextStyle(
+                                                                    fontSize: 18,
+                                                                    color: Colors.white
+                                                                ),
+                                                            ),
+                                                            onPressed: () {},
+                                                        ),
+                                                    ],
+                                                ),
+
                                                 // Space
                                                 Padding(
                                                     padding: EdgeInsets.only(top: 10),

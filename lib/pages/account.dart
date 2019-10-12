@@ -25,7 +25,7 @@ class _Account extends State<Account> {
     var currentPage;
 
     void getUserUploadedPic() {
-        String url ="https://api.imgur.com/3/account/me/images";
+        String url ="/account/me/images";
         Future<Map<String, dynamic>> request = getRequest(url, "data");
         List<String> tmpImages = [];
         List<String> tmpTitles = [];
