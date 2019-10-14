@@ -35,13 +35,6 @@ class _DashboardState extends State<Dashboard> {
                     image.link = image.images[0].link;
                     tmpImages.add(image);
                 }
-                /*List<dynamic> listImg = image['images'];
-
-                // Add to images list
-                if (listImg[0]['link'] != null && image['title'] != null
-                    && listImg[0]['type'].toString().startsWith("image")) {
-                    tmpImages.add(listImg[0]['link']);
-                }*/
             });
 
             // Change and set state to loaded

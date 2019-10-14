@@ -3,7 +3,6 @@ import 'package:epicture/pages/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:epicture/pages/login.dart';
 import 'package:epicture/pages/splashscreen.dart';
-//import 'package:epicture/pages/favPicture.dart';
 
 /// Application starter class
 /// Stateless Widget
