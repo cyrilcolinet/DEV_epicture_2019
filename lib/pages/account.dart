@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epicture/components/buttons/goToHomeButton.dart';
 import 'package:epicture/components/layout.dart';
 import 'package:epicture/components/masonryView.dart';
@@ -20,29 +21,7 @@ class _Account extends State<Account> {
     bool loaded = false;
     User userData;
     List<object.AccountImage> images = [];
-
-    final List<TileSize> tileSizes = [
-        new TileSize(1, 1.0),
-        new TileSize(1, 1.0),
-        new TileSize(1, 2.0),
-        new TileSize(1, 1.0),
-        new TileSize(2, 1.0),
-        new TileSize(1, 2.0),
-        new TileSize(1, 1.0),
-        new TileSize(2, 2.0),
-        new TileSize(2, 1.0),
-        new TileSize(1, 1.0),
-        new TileSize(2, 2.0),
-        new TileSize(2, 1.0),
-        new TileSize(1, 2.0),
-        new TileSize(2, 4.0),
-        new TileSize(3, 1.0),
-        new TileSize(4, 2.0),
-        new TileSize(1, 1.0),
-        new TileSize(3, 2.0),
-        new TileSize(2, 1.0),
-    ];
-
+    List<TileSize> tileSizes = [];
 
     /// Get data futures to one future
     /// Return [Future] of user data and profile pictures
@@ -57,8 +36,7 @@ class _Account extends State<Account> {
         return request.then((data) {
             List<object.AccountImage> tmpImages = [];
             List<dynamic> values = data["data"];
-
-            print(data);
+            List<TileSize> sizes = [];
 
             // Get all images
             values.forEach((tmp) {
@@ -68,6 +46,9 @@ class _Account extends State<Account> {
                 if (image.type.startsWith("image")) {
                     image.link = image.link;
                     tmpImages.add(image);
+
+                    // Configure size of tile
+                    tileSizes.add(new TileSize(1, 1.0));
                 }
             });
 
@@ -91,14 +72,10 @@ class _Account extends State<Account> {
         super.initState();
 
         // Get all futures and load into view
-        List tmpImages;
-        User user;
         this.getDataFutures()
             .then((results) => this.setState(() {
                 images = results[0];
-                print(images);
                 userData = results[1];
-                print(userData.toJson().toString());
                 loaded = true;
             }));
     }
@@ -127,7 +104,7 @@ class _Account extends State<Account> {
                     Padding(
                         padding: EdgeInsets.only(left: 20.0, top: 20),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                                 GoToHomeButton(),
                                 Text("Account",
@@ -137,7 +114,7 @@ class _Account extends State<Account> {
                                         fontFamily: "Calibre-Semibold",
                                         letterSpacing: 1.0,
                                     )
-                                )
+                                ),
                             ],
                         ),
                     ),
@@ -193,8 +170,8 @@ class _Account extends State<Account> {
                                                                         Expanded(
                                                                             child: Column(
                                                                                 children: <Widget>[
-                                                                                    Text("Created"),
-                                                                                    Text(userData.created.toString())
+                                                                                    Text("Uploads"),
+                                                                                    Text(images.length.toString())
                                                                                 ],
                                                                             ),
                                                                         ),
@@ -209,7 +186,7 @@ class _Account extends State<Account> {
                                                         decoration: BoxDecoration(
                                                             borderRadius: BorderRadius.circular(10.0),
                                                             image: DecorationImage(
-                                                                image: NetworkImage(userData.avatar),
+                                                                image: CachedNetworkImageProvider(userData.avatar),
                                                                 fit: BoxFit.cover
                                                             )
                                                         ),
@@ -218,11 +195,25 @@ class _Account extends State<Account> {
                                                 ],
                                             ),
 
+                                            Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Padding(
+                                                    padding: EdgeInsets.only(top: 20, bottom: 10),
+                                                    child: Text("My Uploads",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 30.0,
+                                                            fontFamily: "Calibre-Semibold",
+                                                            letterSpacing: 1.0,
+                                                        )
+                                                    ),
+                                                ),
+                                            ),
+
                                             SizedBox(
                                                 width: MediaQuery.of(context).size.width,
                                                 height: MediaQuery.of(context).size.height - 170,
                                                 child: MasonryView.builder(
-                                                    padding: new EdgeInsets.only(top: 10.0),
                                                     itemCount: this.images.length,
                                                     mainAxisSpacing: 10.0,
                                                     crossAxisSpacing: 10.0,
@@ -269,7 +260,7 @@ class _Account extends State<Account> {
                     ]
                 ),
                 child: FadeInImage(
-                    image: NetworkImage(this.images[index].link),
+                    image: CachedNetworkImageProvider(this.images[index].link),
                     placeholder: AssetImage("assets/images/placeholder-img.jpg"),
                 )
             ),

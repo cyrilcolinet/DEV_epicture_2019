@@ -12,10 +12,13 @@ class GoToHomeButton extends StatelessWidget {
 
         // Adding go to home button
         return Padding(
-            padding: EdgeInsets.only(right: 10),
-            child: Icon(Icons.arrow_back_ios,
-                color: Colors.white,
-                size: 30,
+            padding: EdgeInsets.only(right: 10, bottom: 10),
+            child: InkWell(
+                onTap: () => Navigator.of(context).pop(),
+                child: Icon(Icons.arrow_back_ios,
+                    color: Colors.white,
+                    size: 25,
+                ),
             ),
         );
     }
