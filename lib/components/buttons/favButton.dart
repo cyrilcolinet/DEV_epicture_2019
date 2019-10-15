@@ -77,15 +77,3 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
         );
     }
 }
-
-//FlatButton.icon(
-//            padding: EdgeInsets.all(0),
-//            icon: Icon((image.favorite ? Icons.favorite : Icons.favorite_border),
-//                color: (image.favorite ? Colors.grey : Colors.red),
-//                size: 25.0,
-//            ),
-//            label: Text(this.image.favoriteCount.toString(),
-//                style: TextStyle(fontSize: 18,color: Colors.white),
-//            ),
-//            onPressed: () {},
-//        )
