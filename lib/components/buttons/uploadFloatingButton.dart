@@ -44,6 +44,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                     ),
                                 ),
                                 child: FloatingActionButton.extended(
+                                    heroTag: "choose",
                                     elevation: 10,
                                     icon: const Icon(Icons.library_add),
                                     label: const Text('Choose'),
@@ -67,6 +68,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                     ),
                                 ),
                                 child: FloatingActionButton.extended(
+                                    heroTag: "take",
                                     elevation: 10,
                                     icon: const Icon(Icons.photo_camera),
                                     label: const Text('Take'),
@@ -80,7 +82,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
 
                 // Default floating button
                 FloatingActionButton.extended(
-                    elevation: 8,
+                    heroTag: "upload",
                     icon: const Icon(Icons.add_photo_alternate),
                     label: const Text('Add'),
                     backgroundColor: Colors.green,
