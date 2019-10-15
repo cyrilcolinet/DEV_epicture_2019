@@ -19,7 +19,7 @@ class CardScrollFeed extends StatelessWidget {
     /// Render new page called [PictureInformation]
     Function seeMoreAction(BuildContext context, object.Image image) {
         return () {
-            Navigator.pushReplacementNamed(context, '/pictureInformation',
+            Navigator.pushNamed(context, '/pictureInformation',
                 arguments: PictureInformationArguments(image)
             );
         };

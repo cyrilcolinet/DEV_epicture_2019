@@ -2,10 +2,13 @@ import 'package:Epicture/objects/image.dart' as object;
 import 'package:Epicture/request/request.dart';
 import 'package:flutter/material.dart';
 
+/// FavButton class for fav button
+/// Extended to [StatefulWidget]
 class FavButton extends StatefulWidget {
 
     final object.Image image;
     final List<String> links;
+
     /// Constructor
     FavButton({this.image, this.links});
 
@@ -13,10 +16,14 @@ class FavButton extends StatefulWidget {
     _FavButton createState() => _FavButton(this.image, this.links);
 }
 
+/// State creator of the [FavButton] class
+/// Extended from class [State] and applying setState function
+/// Returns a [Widget] to display content
 class _FavButton extends State<FavButton> with TickerProviderStateMixin {
 
     final object.Image image;
     final List<String> links;
+
     /// Constructor
     _FavButton(this.image, this.links);
 
@@ -24,24 +31,24 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
     /// Just like picture and change colors and icon
     void favImage() {
         if (image.images[0].favorite) {
-            setState(() {
+            return setState(() {
                 image.images[0].favorite = !image.images[0].favorite;
                 image.favoriteCount -= 1;
             });
-            return;
         }
+
         postRequest("/image/" + image.images[0].id + "/favorite");
         setState(() {
             image.images[0].favorite = !image.images[0].favorite;
             image.favoriteCount += 1;
         });
     }
+
     /// Build (and re-build) widget
-    @override
-    Widget build(BuildContext context) {
-      if (links.contains(image.images[0].link)) {
-        image.images[0].favorite = true;
-      }
+    @override Widget build(BuildContext context) {
+      if (links.contains(image.images[0].link))
+            image.images[0].favorite = true;
+
       return Container(
             child: Align(
                 alignment: Alignment.centerLeft,
