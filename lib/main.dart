@@ -2,6 +2,7 @@ import 'package:Epicture/pages/account.dart';
 import 'package:Epicture/pages/dashboard.dart';
 import 'package:Epicture/pages/favPictures.dart';
 import 'package:Epicture/pages/login.dart';
+import 'package:Epicture/pages/pictureInformation.dart';
 import 'package:Epicture/pages/splashscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,8 @@ class Epicture extends StatelessWidget {
           '/login': (context) => Login(),
           '/dashboard': (context) => new Dashboard(),
           '/account': (context) => new Account(),
-          '/fav': (context) => new FavPictures()
+          '/fav': (context) => new FavPictures(),
+          '/pictureInformation': (context) => PictureInformation()
       },
     );
   }
