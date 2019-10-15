@@ -40,7 +40,7 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
     @override
     Widget build(BuildContext context) {
       if (links.contains(image.images[0].link)) {
-        image.images[0].favorite = !image.images[0].favorite;
+        image.images[0].favorite = true;
       }
       return Container(
             child: Row(
