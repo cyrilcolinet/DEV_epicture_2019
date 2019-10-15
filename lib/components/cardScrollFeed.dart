@@ -8,9 +8,10 @@ import 'package:flutter/material.dart';
 class CardScrollFeed extends StatelessWidget {
 
     final List<object.Image> images;
+    final List<String> links;
 
     /// CardScrollFeed constructor
-    CardScrollFeed({this.images});
+    CardScrollFeed({this.images, this.links});
 
     /// Build content as list
     @override
@@ -77,7 +78,7 @@ class CardScrollFeed extends StatelessWidget {
                                                                     children: <Widget>[
                                                                         Padding(
                                                                             padding: EdgeInsets.only(left: 0),
-                                                                            child: FavButton(image: images[index])
+                                                                            child: FavButton(image: images[index], links: this.links,)
                                                                         ),
                                                                         Padding(
                                                                             padding: EdgeInsets.only(left: 0),

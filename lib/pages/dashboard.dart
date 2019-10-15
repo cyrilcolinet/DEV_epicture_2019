@@ -17,15 +17,21 @@ class _DashboardState extends State<Dashboard> {
     // Class variables
     List<object.Image> images = [];
     List<String> titles = [];
+    List<String> links = [];
+
+    Future getDataFutures() {
+        return Future.wait([this.getViralUrls("hot", "viral", "day", "0"), this.parseAccountFavPictures()]);
+    }
 
     /// Get viral links from API
-    void getViralUrls(String section, String sort, String window, String page) {
+    Future getViralUrls(String section, String sort, String window, String page) {
         String url = "/gallery/" + section + "/" + sort + "/" + window + "/" + page;
         Future<Map<String, dynamic>> request = getRequest(url, "data");
         List<object.Image> tmpImages = [];
 
+        print("getting viral url");
         // Wait for request result
-        request.then((data) {
+        return request.then((data) {
             List<dynamic> values = data["data"];
             values.where((item) => item['images'] != null).forEach((tmp) {
                 object.Image image = object.Image.fromJson(tmp);
@@ -36,12 +42,30 @@ class _DashboardState extends State<Dashboard> {
                     tmpImages.add(image);
                 }
             });
-
+            print("returning viral images");
+            return tmpImages;
             // Change and set state to loaded
-            setState(() {
-                this.images = tmpImages;
-                this.loaded = true;
+        });
+    }
+
+    Future parseAccountFavPictures() {
+        Future request = getRequest("/account/me/favorites/", "data");
+
+        print("getting fav pictures");
+        return request.then((data) {
+            List<String> links = [];
+            List<dynamic> values = data["data"];
+
+            // Get all images
+            values.forEach((tmp) {
+                object.Images image = object.Images.fromJson(tmp);
+                if (image.type.startsWith("image")) {
+                    image.link = image.link;
+                    links.add(image.link);
+                }
             });
+            print("returning fav pictures");
+            return links;
         });
     }
 
@@ -49,7 +73,13 @@ class _DashboardState extends State<Dashboard> {
     @override
     void initState() {
         super.initState();
-        this.getViralUrls("hot", "viral", "day", "0");
+
+        this.getDataFutures().then((res) => this.setState(() {
+            this.images = res[0];
+            this.links = res[1];
+            print(links);
+            this.loaded = true;
+        }));
     }
 
     /// Build widget
@@ -92,7 +122,7 @@ class _DashboardState extends State<Dashboard> {
                             ],
                         ),
                     ),
-                    CardScrollFeed(images: this.images),
+                    CardScrollFeed(images: this.images, links: this.links),
                 ],
             ),
         );

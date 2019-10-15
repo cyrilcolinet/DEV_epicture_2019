@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 class FavButton extends StatefulWidget {
 
     final object.Image image;
-
+    final List<String> links;
     /// Constructor
-    FavButton({this.image});
+    FavButton({this.image, this.links});
 
     // Create state to rebuild simple
-    _FavButton createState() => _FavButton(this.image);
+    _FavButton createState() => _FavButton(this.image, this.links);
 }
 
 class _FavButton extends State<FavButton> with TickerProviderStateMixin {
 
     final object.Image image;
-
+    final List<String> links;
     /// Constructor
-    _FavButton(this.image);
+    _FavButton(this.image, this.links);
 
     /// Action triggered when user click to "fav" button
     /// Just like picture and change colors and icon
@@ -36,11 +36,13 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
             image.favoriteCount += 1;
         });
     }
-
     /// Build (and re-build) widget
     @override
     Widget build(BuildContext context) {
-        return Container(
+      if (links.contains(image.images[0].link)) {
+        image.images[0].favorite = !image.images[0].favorite;
+      }
+      return Container(
             child: Row(
                 children: <Widget>[
 
