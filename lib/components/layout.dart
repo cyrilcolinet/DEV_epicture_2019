@@ -1,6 +1,6 @@
-import 'package:epicture/components/customBottomNavigationBar.dart';
+import 'package:Epicture/components/Drawer.dart';
+import 'package:Epicture/components/customBottomNavigationBar.dart';
 import 'package:flutter/material.dart';
-import 'Drawer.dart';
 
 /// Header component
 /// Must be integrated in all routes

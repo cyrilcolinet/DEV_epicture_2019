@@ -1,9 +1,9 @@
-import 'package:epicture/pages/account.dart';
-import 'package:epicture/pages/dashboard.dart';
+import 'package:Epicture/pages/account.dart';
+import 'package:Epicture/pages/dashboard.dart';
+import 'package:Epicture/pages/favPictures.dart';
+import 'package:Epicture/pages/login.dart';
+import 'package:Epicture/pages/splashscreen.dart';
 import 'package:flutter/material.dart';
-import 'package:epicture/pages/login.dart';
-import 'package:epicture/pages/splashscreen.dart';
-import 'package:epicture/pages/favPictures.dart';
 
 /// Application starter class
 /// Stateless Widget

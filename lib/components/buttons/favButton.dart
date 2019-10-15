@@ -1,5 +1,5 @@
-import 'package:epicture/objects/image.dart' as object;
-import 'package:epicture/request/request.dart';
+import 'package:Epicture/objects/image.dart' as object;
+import 'package:Epicture/request/request.dart';
 import 'package:flutter/material.dart';
 
 class FavButton extends StatefulWidget {

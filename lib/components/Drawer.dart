@@ -1,8 +1,5 @@
-import 'package:epicture/components/customIcons.dart';
+import 'package:Epicture/views/cameraController.dart';
 import 'package:flutter/material.dart';
-import 'package:epicture/request/request.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:epicture/views/cameraController.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

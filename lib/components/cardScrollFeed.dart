@@ -1,7 +1,6 @@
-import 'package:epicture/components/buttons/favButton.dart';
-import 'package:epicture/objects/image.dart' as object;
+import 'package:Epicture/components/buttons/favButton.dart';
+import 'package:Epicture/objects/image.dart' as object;
 import 'package:flutter/material.dart';
-import 'package:epicture/request/request.dart';
 
 /// CardScrollFeed class
 /// Stateless Widget extended

@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
+import 'package:Epicture/request/request.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' show join;
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:epicture/request/request.dart';
 
 // A screen that allows users to take a picture using a given camera.
 class TakePictureScreen extends StatefulWidget {

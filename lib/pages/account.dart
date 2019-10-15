@@ -1,13 +1,13 @@
+import 'package:Epicture/components/buttons/goToHomeButton.dart';
+import 'package:Epicture/components/layout.dart';
+import 'package:Epicture/components/masonryView.dart';
+import 'package:Epicture/objects/accountImage.dart';
+import 'package:Epicture/objects/user.dart';
+import 'package:Epicture/request/request.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:epicture/components/buttons/goToHomeButton.dart';
-import 'package:epicture/components/layout.dart';
-import 'package:epicture/components/masonryView.dart';
-import 'package:epicture/objects/user.dart';
-import 'package:epicture/request/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:epicture/objects/accountImage.dart' as object;
 
 /// Account class
 /// Stateful widget extend
@@ -20,7 +20,7 @@ class Account extends StatefulWidget {
 class _Account extends State<Account> {
     bool loaded = false;
     User userData;
-    List<object.AccountImage> images = [];
+    List<AccountImage> images = [];
     List<TileSize> tileSizes = [];
 
     /// Get data futures to one future
@@ -34,13 +34,13 @@ class _Account extends State<Account> {
         Future request = getRequest("/account/me/images", "data");
 
         return request.then((data) {
-            List<object.AccountImage> tmpImages = [];
+            List<AccountImage> tmpImages = [];
             List<dynamic> values = data["data"];
             List<TileSize> sizes = [];
 
             // Get all images
             values.forEach((tmp) {
-                object.AccountImage image = object.AccountImage.fromJson(tmp);
+                AccountImage image = AccountImage.fromJson(tmp);
 
                 // Check for valid type of codec
                 if (image.type.startsWith("image")) {
