@@ -13,6 +13,12 @@ class CardScrollFeed extends StatelessWidget {
     /// CardScrollFeed constructor
     CardScrollFeed({this.images, this.links});
 
+    /// See more action
+    /// Render new page called [
+    void seeMoreAction(object.Image image) {
+
+    }
+
     /// Display image
     /// Return [Widget]
     Widget displayImage(BuildContext context, int index) {
@@ -96,6 +102,7 @@ class CardScrollFeed extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.only(top: 20, right: 15, left: 15, bottom: 40),
             child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
 
                     // See more button
