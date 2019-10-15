@@ -1,4 +1,5 @@
 import 'package:Epicture/components/buttons/favButton.dart';
+import 'package:Epicture/components/buttons/voteButton.dart';
 import 'package:Epicture/objects/image.dart' as object;
 import 'package:flutter/material.dart';
 
@@ -69,28 +70,40 @@ class CardScrollFeed extends StatelessWidget {
                                                     )
                                                 ),
 
-                                                Row(
+                                                Column(
                                                     children: <Widget>[
                                                         // Favourites
-                                                        Padding(
-                                                            padding: EdgeInsets.only(right: 15),
-                                                            child: FavButton(image: images[index])
-                                                        ),
-
-                                                        // User
-                                                        FlatButton.icon(
-                                                            icon: Icon(Icons.people,
-                                                                size: 25,
-                                                                color: Colors.grey,
-                                                            ),
-                                                            label: Text(images[index].accountUrl,
-                                                                style: TextStyle(
-                                                                    fontSize: 18,
-                                                                    color: Colors.white
+                                                                Row(
+                                                                    children: <Widget>[
+                                                                        Padding(
+                                                                            padding: EdgeInsets.only(left: 0),
+                                                                            child: FavButton(image: images[index])
+                                                                        ),
+                                                                        Padding(
+                                                                            padding: EdgeInsets.only(left: 0),
+                                                                            child: VoteButton(image: images[index])
+                                                                        ),
+                                                                    ],
                                                                 ),
-                                                            ),
-                                                            onPressed: () {},
-                                                        ),
+
+                                                                // User
+                                                                Align(
+                                                                    alignment: Alignment.centerLeft,
+                                                                    child:  FlatButton.icon(
+                                                                        icon: Icon(Icons.people,
+                                                                            size: 25,
+                                                                            color: Colors.grey,
+                                                                        ),
+                                                                        label: Text(images[index].accountUrl,
+                                                                            style: TextStyle(
+                                                                                fontSize: 18,
+                                                                                color: Colors.white
+                                                                            ),
+                                                                        ),
+                                                                        onPressed: () {},
+                                                                    ),
+                                                                ),
+
                                                     ],
                                                 ),
 

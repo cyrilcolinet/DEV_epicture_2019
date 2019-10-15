@@ -23,9 +23,17 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
     /// Action triggered when user click to "fav" button
     /// Just like picture and change colors and icon
     void favImage() {
+        if (image.images[0].favorite) {
+            setState(() {
+                image.images[0].favorite = !image.images[0].favorite;
+                image.favoriteCount -= 1;
+            });
+            return;
+        }
         postRequest("/image/" + image.images[0].id + "/favorite");
         setState(() {
             image.images[0].favorite = !image.images[0].favorite;
+            image.favoriteCount += 1;
         });
     }
 
