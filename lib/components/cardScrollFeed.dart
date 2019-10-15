@@ -23,32 +23,36 @@ class CardScrollFeed extends StatelessWidget {
                 itemCount: this.images.length,
                 itemBuilder: (BuildContext context, int index) {
                     return Padding(
-                        padding: EdgeInsets.only(
+                        padding: EdgeInsets.all(0),
+                        /*padding: EdgeInsets.only(
                             left: 20,
                             right: 20,
                             bottom: 50
-                        ),
+                        ),*/
                         child: Column(
                             children: <Widget>[
 
                                 // Display image
-                                ClipRRect(
-                                    borderRadius: BorderRadius.circular(16),
-                                    child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.black12,
-                                                    offset: Offset(3.0, 6.0),
-                                                    blurRadius: 10.0
-                                                )
-                                            ]
+                                Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                boxShadow: [
+                                                    BoxShadow(
+                                                        color: Colors.black12,
+                                                        offset: Offset(3.0, 6.0),
+                                                        blurRadius: 10.0
+                                                    )
+                                                ]
+                                            ),
+                                            child: FadeInImage(
+                                                image: NetworkImage(this.images[index].link),
+                                                placeholder: AssetImage("assets/images/placeholder-img.jpg"),
+                                            )
                                         ),
-                                        child: FadeInImage(
-                                            image: NetworkImage(this.images[index].link),
-                                            placeholder: AssetImage("assets/images/placeholder-img.jpg"),
-                                        )
                                     ),
                                 ),
 
@@ -63,55 +67,66 @@ class CardScrollFeed extends StatelessWidget {
                                             children: <Widget>[
 
                                                 // Title of image
-                                                Text(this.images[index].title,
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 25.0,
-                                                        fontFamily: "SF-Pro-Text-Regular"
-                                                    )
+                                                Padding(
+                                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                                    child: Text(this.images[index].title,
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 25.0,
+                                                            fontFamily: "SF-Pro-Text-Regular"
+                                                        )
+                                                    ),
                                                 ),
 
                                                 Column(
                                                     children: <Widget>[
                                                         // Favourites
-                                                                Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                                    children: <Widget>[
-                                                                        Padding(
-                                                                            padding: EdgeInsets.only(left: 0),
-                                                                            child: FavButton(image: images[index], links: this.links,)
-                                                                        ),
-                                                                        Padding(
-                                                                            padding: EdgeInsets.only(left: 0),
-                                                                            child: VoteButton(image: images[index])
-                                                                        ),
-                                                                    ],
-                                                                ),
+                                                        Padding(
+                                                            padding: EdgeInsets.only(left: 10, right: 20),
+                                                            child: Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                children: <Widget>[
+                                                                    Padding(
+                                                                        padding: EdgeInsets.only(left: 0),
+                                                                        child: FavButton(image: images[index], links: this.links,)
+                                                                    ),
+                                                                    Padding(
+                                                                        padding: EdgeInsets.only(left: 0),
+                                                                        child: VoteButton(image: images[index])
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                        ),
 
-                                                                // User
-                                                                Align(
-                                                                    alignment: Alignment.centerLeft,
-                                                                    child:  FlatButton.icon(
-                                                                        icon: Icon(Icons.people,
+                                                        // User
+                                                        Padding(
+                                                            padding: EdgeInsets.only(left: 20),
+                                                            child: InkWell(
+                                                                onTap: () {},
+                                                                child: Row(
+                                                                    children: <Widget>[
+                                                                        Icon(Icons.person,
                                                                             size: 25,
                                                                             color: Colors.grey,
                                                                         ),
-                                                                        label: Text(images[index].accountUrl,
+                                                                        SizedBox(width: 10),
+                                                                        Text(images[index].accountUrl,
                                                                             style: TextStyle(
                                                                                 fontSize: 18,
                                                                                 color: Colors.white
                                                                             ),
-                                                                        ),
-                                                                        onPressed: () {},
-                                                                    ),
+                                                                        )
+                                                                    ],
                                                                 ),
+                                                            ),
+                                                        ),
 
                                                     ],
                                                 ),
 
                                                 // Space
                                                 Padding(
-                                                    padding: EdgeInsets.only(top: 10),
+                                                    padding: EdgeInsets.only(top: 20, right: 20, left: 20, bottom: 30),
                                                     child: Row(
                                                         children: <Widget>[
 

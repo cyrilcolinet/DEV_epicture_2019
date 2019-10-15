@@ -14,7 +14,7 @@ class GoToHomeButton extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.only(right: 10, bottom: 10),
             child: InkWell(
-                onTap: () => Navigator.of(context).pop(),
+                onTap: () => Navigator.of(context).pushReplacementNamed('/dashboard'),
                 child: Icon(Icons.arrow_back_ios,
                     color: Colors.white,
                     size: 25,

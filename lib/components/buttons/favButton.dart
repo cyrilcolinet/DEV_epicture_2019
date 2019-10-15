@@ -43,33 +43,36 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
         image.images[0].favorite = true;
       }
       return Container(
-            child: Row(
-                children: <Widget>[
+            child: Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                    children: <Widget>[
 
-                    // Button
-                    AnimatedSize(
-                        duration: Duration(milliseconds: 500),
-                        vsync: this,
-                        child: IconButton(
-                            padding: EdgeInsets.all(0.0),
-                            //alignment: Alignment.centerLeft,
-                            splashColor: Colors.transparent,
-                            icon: Icon((image.images[0].favorite ? Icons.favorite : Icons.favorite_border),
-                                color: (image.images[0].favorite ? Colors.red : Colors.grey),
-                                size: 25.0,
+                        // Button
+                        AnimatedSize(
+                            duration: Duration(milliseconds: 500),
+                            vsync: this,
+                            child: IconButton(
+                                padding: EdgeInsets.all(0.0),
+                                //alignment: Alignment.centerLeft,
+                                splashColor: Colors.transparent,
+                                icon: Icon((image.images[0].favorite ? Icons.favorite : Icons.favorite_border),
+                                    color: (image.images[0].favorite ? Colors.red : Colors.grey),
+                                    size: 25.0,
+                                ),
+                                onPressed: this.favImage,
                             ),
-                            onPressed: this.favImage,
                         ),
-                    ),
 
-                    // Text
-                    Text(this.image.favoriteCount.toString(),
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.white
-                        ),
-                    )
-                ],
+                        // Text
+                        Text(this.image.favoriteCount.toString(),
+                            style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.white
+                            ),
+                        )
+                    ],
+                ),
             ),
         );
     }
