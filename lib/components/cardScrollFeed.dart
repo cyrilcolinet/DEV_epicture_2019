@@ -75,6 +75,7 @@ class CardScrollFeed extends StatelessWidget {
                                                     children: <Widget>[
                                                         // Favourites
                                                                 Row(
+                                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                     children: <Widget>[
                                                                         Padding(
                                                                             padding: EdgeInsets.only(left: 0),
