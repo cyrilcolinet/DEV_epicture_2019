@@ -47,11 +47,11 @@ class CustomBottomNavigationBar extends StatelessWidget {
                             children: <Widget>[
                                 SizedBox(width: 15),
                                 IconButton(
-                                    icon: Icon(Icons.people),
-                                    color: ModalRoute.of(context).settings.name == '/account' ? Colors.green : Colors.white,
+                                    icon: Icon(Icons.dashboard),
+                                    color: ModalRoute.of(context).settings.name == '/dashboard' ? Colors.green : Colors.white,
                                     onPressed: () {
-                                        if (ModalRoute.of(context).settings.name != '/account')
-                                            Navigator.of(context).pushNamed('/account');
+                                        if (ModalRoute.of(context).settings.name != '/dashboard')
+                                            Navigator.of(context).pushReplacementNamed('/dashboard');
                                     },
                                 ),
                                 SizedBox(width: 15),
@@ -67,15 +67,21 @@ class CustomBottomNavigationBar extends StatelessWidget {
                         Row(
                             children: <Widget>[
                                 IconButton(
-                                    icon: Icon(Icons.settings),
-                                    color: Colors.white,
-                                    onPressed: this.searchImage,
+                                    icon: Icon(Icons.people),
+                                    color: ModalRoute.of(context).settings.name == '/account' ? Colors.green : Colors.white,
+                                    onPressed: () {
+                                        if (ModalRoute.of(context).settings.name != '/account')
+                                            Navigator.of(context).pushReplacementNamed('/account');
+                                    },
                                 ),
                                 SizedBox(width: 15),
                                 IconButton(
-                                    icon: Icon(Icons.search),
-                                    color: Colors.white,
-                                    onPressed: this.searchImage,
+                                    icon: Icon(Icons.settings),
+                                    color: ModalRoute.of(context).settings.name == '/settings' ? Colors.green : Colors.white,
+                                    onPressed: () {
+                                        if (ModalRoute.of(context).settings.name != '/settings')
+                                            Navigator.of(context).pushReplacementNamed('/settings');
+                                    },
                                 ),
                                 SizedBox(width: 15),
                             ],

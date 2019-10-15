@@ -20,12 +20,12 @@ class Image {
     bool isAlbum;
     String vote;
     bool favorite;
+    int favoriteCount;
     bool nsfw;
     String section;
     int commentCount;
-    int favoriteCount;
-    String topic;
-    int topicId;
+    dynamic topic;
+    dynamic topicId;
     int imagesCount;
     bool inGallery;
     bool isAd;
@@ -237,6 +237,7 @@ class Images {
     int mp4Size;
     bool looping;
     Processing processing;
+    int favoriteCount;
 
     /// Constructor
     Images({this.id, this.description, this.datetime, this.type,
@@ -244,7 +245,7 @@ class Images {
         this.bandwidth, this.favorite, this.isAd, this.inMostViral,
         this.hasSound, this.tags, this.adType, this.adUrl, this.edited,
         this.inGallery, this.link, this.mp4, this.gifv, this.hls, this.mp4Size,
-        this.looping, this.processing});
+        this.looping, this.processing, this.favoriteCount});
 
     /// Construct from jso
     Images.fromJson(Map<String, dynamic> json) {
@@ -276,6 +277,7 @@ class Images {
         hls = json['hls'];
         mp4Size = json['mp4_size'];
         looping = json['looping'];
+        favoriteCount = json['favorite_count'];
         processing = json['processing'] != null ? new Processing.fromJson(json['processing']) : null;
     }
 
@@ -308,6 +310,7 @@ class Images {
         data['hls'] = this.hls;
         data['mp4_size'] = this.mp4Size;
         data['looping'] = this.looping;
+        data['favorite_count'] = this.favoriteCount;
         if (this.processing != null)
             data['processing'] = this.processing.toJson();
         return data;

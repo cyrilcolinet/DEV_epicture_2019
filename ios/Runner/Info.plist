@@ -48,5 +48,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSCameraUsageDescription</key>
+    <string>Take picture and upload it to Imgut</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>Use microphone to register new video</string>
 </dict>
 </plist>
