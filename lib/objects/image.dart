@@ -18,7 +18,7 @@ class Image {
     int points;
     int score;
     bool isAlbum;
-    int vote;
+    String vote;
     bool favorite;
     bool nsfw;
     String section;

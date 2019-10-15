@@ -2,32 +2,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Post class
-class Post {
-    final String userId;
-    final int id;
-    final String avatar;
-
-    /// Constructor
-    Post({this.userId, this.id, this.avatar});
-
-    /// Debug results
-    void debug() {
-        print(this.userId);
-        print(this.id);
-        print(this.avatar);
-    }
-
-    /// Build a fromJson method
-    factory Post.fromJson(Map<String, dynamic> json) {
-        return Post(
-            userId: json['url'],
-            id: json['id'],
-            avatar: json['avatar'],
-        );
-    }
-}
-
 String baseUrl = "https://api.imgur.com/3";
 
 /// Get request from url
@@ -55,7 +29,7 @@ Future<String> postRequest(String url, {bool isAnonymousRequest = false, Map jso
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     print("doing request");
-    print(json);
+    print(url);
     if (!isAnonymousRequest) {
         final response = await http.post(baseUrl + url, headers: {
             'Authorization': 'Bearer ' + prefs.getString("access_token"),
@@ -77,8 +51,6 @@ Future<String> postRequest(String url, {bool isAnonymousRequest = false, Map jso
             print(response.statusCode);
             return response.body;
         }
-        print(response.statusCode);
-        print(response.reasonPhrase);
         return "request failed";
     }
 }

@@ -157,7 +157,7 @@ class DisplayPictureScreen extends StatelessWidget {
                 RaisedButton(
                     padding: EdgeInsets.all(50.0),
                     onPressed: () {
-                      postRequest("https://api.imgur.com/3/upload", isAnonymousRequest:false, json:convertImg(File(imagePath)));
+                      postRequest("/upload", isAnonymousRequest:false, json:convertImg(File(imagePath)));
                       Navigator.of(context).pushReplacementNamed('/dashboard');
                     },
                     color: Colors.blueAccent,
