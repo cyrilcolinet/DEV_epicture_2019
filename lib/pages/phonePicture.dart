@@ -9,28 +9,49 @@ import 'package:path_provider/path_provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 // A screen that allows users to take a picture using a given camera.
-class PictureScreen extends StatelessWidget {
+class PictureScreen extends StatefulWidget {
   final File picture;
+  PictureScreen({Key key, this.picture}): super(key: key);
+  @override
+  _PictureScreen createState() => _PictureScreen();
+}
 
-  const PictureScreen({
-    Key key,
+class _PictureScreen extends State<PictureScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  //final File picture;
+  TextEditingController name = new TextEditingController();
+  TextEditingController desc = new TextEditingController();
+
+
+  /*_PictureScreen({
     @required this.picture,
-  }) : super(key: key);
-  //PictureScreen({this.picture});
-
-  Map CreateBodyForUpload(String EncodedPicture) {
+  });
+*/
+  Map CreateBodyForUpload(String EncodedPicture, String Name, String Description) {
+    print("body creation");
+    print(Name);
+    print(Description);
     Map body = {
-      'image': EncodedPicture
+      'image': EncodedPicture,
+      'name': Name,
+      'description': Description,
     };
 
     return (body);
   }
 
-  Map convertImg(File path) {
+  Map convertImg(File path, String name, String Description) {
     Map body = {};
     List<int> imageBytes = path.readAsBytesSync();
     String test = base64Encode(imageBytes);
-    body = CreateBodyForUpload(test);
+    print("boddy started creating");
+    body = CreateBodyForUpload(test, name, Description);
+    print("boddy finished creating");
     return body;
   }
 
@@ -40,13 +61,29 @@ class PictureScreen extends StatelessWidget {
       body: Container(
         child: Column(
           children: <Widget>[
-            Image.file(this.picture, height: 300.0, width: 300.0),
+            Image.file(widget.picture, height: 300.0, width: 300.0),
+            TextField(
+              controller: this.name,
+              decoration: InputDecoration(
+                  hintText: "Name"
+              ),
+              autocorrect: true,
+            ),
+            TextField(
+              controller: this.desc,
+              decoration: InputDecoration(
+                  hintText: "Description"
+              ),
+              autocorrect: true,
+            ),
             Row(
               children: <Widget>[
                 RaisedButton(
                     padding: EdgeInsets.all(50.0),
                     onPressed: () {
-                      postRequest("/upload", isAnonymousRequest:false, json:convertImg(this.picture));
+                      print(name.text);
+                      print(desc.text);
+                      postRequest("/upload", isAnonymousRequest:false, json:convertImg(widget.picture, this.name.text, this.desc.text));
                       Navigator.of(context).pushReplacementNamed('/dashboard');
                     },
                     color: Colors.blueAccent,
