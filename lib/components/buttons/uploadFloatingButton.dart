@@ -1,7 +1,6 @@
-import 'dart:math' as math;
 import 'dart:io';
+import 'package:Epicture/objects/arguments/uploadImageArguments.dart';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:Epicture/pages/phonePicture.dart';
 
@@ -14,25 +13,24 @@ class UploadFloatingButton extends StatefulWidget {
 class _UploadFloatingButton extends State<UploadFloatingButton>
     with TickerProviderStateMixin {
 
-    File picture;
-    bool loaded = false;
     AnimationController animController;
 
-    Future getPicture(bool isCamera) async {
-        File Picture;
+    /// Take or get a picture from camera/gallery and pass it to [UploadImage]
+    /// route.
+    Function takePictureFromFileOrCamera(BuildContext context, ImageSource source) {
+        return () async {
+            File picture = await ImagePicker.pickImage(source: source);
 
-        if (isCamera) {
-            Picture = await ImagePicker.pickImage(source: ImageSource.camera);
-        } else {
-            Picture = await ImagePicker.pickImage(source: ImageSource.gallery);
-        }
-        setState(() {
-            picture = Picture;
-            loaded = true;
-        });
+            // Redirect to route
+            Navigator.pushNamed(context, '/uploadImage',
+                arguments: UploadImageArguments(picture)
+            );
+        };
     }
+
     /// When widget start init of state
-    @override void initState() {
+    @override
+    void initState() {
         super.initState();
 
         // Configure animation controller
@@ -42,10 +40,9 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
         );
     }
 
-    @override Widget build(BuildContext context) {
-        if (loaded) {
-            return PictureScreen(picture: picture);
-        }
+    /// Build default [Widget] and display with contents
+    @override
+    Widget build(BuildContext context) {
         return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -72,9 +69,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                     icon: const Icon(Icons.library_add),
                                     label: const Text('Choose'),
                                     backgroundColor: Colors.blue,
-                                    onPressed: () {
-                                        getPicture(false);
-                                    },
+                                    onPressed: this.takePictureFromFileOrCamera(context, ImageSource.gallery),
                                 )
                             ),
                         ),
@@ -98,9 +93,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                     icon: const Icon(Icons.photo_camera),
                                     label: const Text('Take'),
                                     backgroundColor: Colors.blue,
-                                    onPressed: () {
-                                        getPicture(true);
-                                    },
+                                    onPressed: this.takePictureFromFileOrCamera(context, ImageSource.camera),
                                 )
                             ),
                         )
@@ -125,48 +118,6 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                 SizedBox(height: 60)
 
             ],
-        );
-
-
-        return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: List.generate(1, (int index) {
-                Widget child = Container(
-                    height: 70.0,
-                    //width: 56.0,
-                    alignment: FractionalOffset.topCenter,
-                    child: ScaleTransition(
-                        scale: CurvedAnimation(
-                            parent: this.animController,
-                            curve: Interval(0.0, 1.0 - index / 4.0,
-                                curve: Curves.easeOut
-                            ),
-                        ),
-                        child: FloatingActionButton.extended(
-                            elevation: 20,
-                            icon: const Icon(Icons.photo_camera),
-                            label: const Text('Upload'),
-                            backgroundColor: Colors.green,
-                            onPressed: () {},
-                        )
-                    ),
-                );
-                return child;
-            }).toList()..add(
-                FloatingActionButton.extended(
-                    elevation: 20,
-                    icon: const Icon(Icons.photo_camera),
-                    label: const Text('Upload'),
-                    backgroundColor: Colors.green,
-                    onPressed: () {
-                        if (this.animController.isDismissed) {
-                            this.animController.forward();
-                        } else {
-                            this.animController.reverse();
-                        }
-                    },
-                )
-            ),
         );
     }
 }

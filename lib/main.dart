@@ -4,6 +4,7 @@ import 'package:Epicture/pages/favPictures.dart';
 import 'package:Epicture/pages/login.dart';
 import 'package:Epicture/pages/pictureInformation.dart';
 import 'package:Epicture/pages/splashscreen.dart';
+import 'package:Epicture/pages/uploadImage.dart';
 import 'package:flutter/material.dart';
 
 /// Application starter class
@@ -24,6 +25,7 @@ class Epicture extends StatelessWidget {
           '/account': (context) => new Account(),
           '/fav': (context) => new FavPictures(),
           '/pictureInformation': (context) => PictureInformation(),
+          '/uploadImage': (context) => UploadImage()
       },
     );
   }
