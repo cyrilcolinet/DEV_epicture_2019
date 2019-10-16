@@ -1,7 +1,11 @@
+import 'dart:io';
+import 'dart:math';
+
 import 'package:Epicture/views/cameraController.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:image_picker/image_picker.dart';
 
 Future<CameraDescription> getCamera() async {
     // Obtain a list of the available cameras on the device.
@@ -13,6 +17,11 @@ Future<CameraDescription> getCamera() async {
     return firstCamera;
 }
 
+Future PickPictureFromGallery() async {
+    File picture;
+
+    picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+}
 class SlideMenu extends StatefulWidget {
     @override
     _SlideMenu createState() => new _SlideMenu();
@@ -21,6 +30,9 @@ class SlideMenu extends StatefulWidget {
 class _SlideMenu extends State<SlideMenu> {
     var camera;
     var loaded = false;
+    File _picture;
+
+
     @override
     void initState() {
         super.initState();
@@ -64,7 +76,7 @@ class _SlideMenu extends State<SlideMenu> {
                         }
                     ),
                     new ListTile(
-                        title: new Text("Disconnect"),
+                        title: new Text("pick form galerry"),
                         trailing: new Icon(Icons.arrow_upward),
                         onTap: () {}
                     )

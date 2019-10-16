@@ -11,7 +11,11 @@ class SplashScreen extends StatefulWidget {
 
 /// SplashScreen class
 /// Configure state
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+
+    Animation<Color> animation;
+    AnimationController animController;
 
     /// Start timer splash screen
     startTime() async {
@@ -34,13 +38,40 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     /// When state is started
-    @override
-    void initState() {
+    @override void initState() {
         super.initState();
         startTime();
 
+        // Configure blinking logo
+        this.animController = new AnimationController(
+            vsync: this,
+            duration: Duration(milliseconds: 1500)
+        );
+        this.animController.repeat();
+
+        final CurvedAnimation curve = CurvedAnimation(
+            parent: this.animController, curve: Curves.linear);
+        this.animation = ColorTween(begin: Colors.white, end: Colors.blue).animate(curve);
+        this.animation.addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+                this.animController.reverse();
+            } else if (status == AnimationStatus.dismissed) {
+                this.animController.forward();
+            }
+
+            // Rebuild
+            setState(() {});
+        });
+        this.animController.forward();
+
         // TODO: Only debugging
         //SharedPreferences.getInstance().then((prefs) => prefs.clear());
+    }
+
+    /// On page dispose
+    @override void dispose() {
+        this.animController.dispose();
+        super.dispose();
     }
 
     /// Build widget
@@ -58,9 +89,17 @@ class _SplashScreenState extends State<SplashScreen> {
                     tileMode: TileMode.clamp
                 )
             ),
-            child: Column(
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                    Image.network("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Imgur_logo.svg/1200px-Imgur_logo.svg.png")
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * 2 / 3,
+                        child: FadeTransition(
+                            opacity: this.animController,
+                            child: Image.asset("assets/images/logo.png"),
+                        ),
+                    )
                 ],
             )
         );

@@ -102,7 +102,7 @@ class _Account extends State<Account> {
             child: Column(
                 children: <Widget>[
                     Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 20),
+                        padding: EdgeInsets.only(top: 20),
                         child: Row(
                             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[

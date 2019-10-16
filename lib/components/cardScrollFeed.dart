@@ -1,5 +1,6 @@
 import 'package:Epicture/components/buttons/favButton.dart';
 import 'package:Epicture/components/buttons/voteButton.dart';
+import 'package:Epicture/objects/arguments/pictureInformationArguments.dart';
 import 'package:Epicture/objects/image.dart' as object;
 import 'package:flutter/material.dart';
 
@@ -13,10 +14,15 @@ class CardScrollFeed extends StatelessWidget {
     /// CardScrollFeed constructor
     CardScrollFeed({this.images, this.links});
 
-    /// See more action
-    /// Render new page called [
-    void seeMoreAction(object.Image image) {
-
+    /// See more action as a [Function]
+    /// Pass parameter [object.Image] in route to get data without requesting
+    /// Render new page called [PictureInformation]
+    Function seeMoreAction(BuildContext context, object.Image image) {
+        return () {
+            Navigator.pushNamed(context, '/pictureInformation',
+                arguments: PictureInformationArguments(image)
+            );
+        };
     }
 
     /// Display image
@@ -24,23 +30,27 @@ class CardScrollFeed extends StatelessWidget {
     Widget displayImage(BuildContext context, int index) {
         return Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(3.0, 6.0),
-                                blurRadius: 10.0
-                            )
-                        ]
+            child: InkWell(
+                onTap: this.seeMoreAction(context, images[index]),
+                splashColor: Colors.transparent,
+                child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    offset: Offset(3.0, 6.0),
+                                    blurRadius: 10.0
+                                )
+                            ]
+                        ),
+                        child: FadeInImage(
+                            image: NetworkImage(this.images[index].link),
+                            placeholder: AssetImage("assets/images/placeholder-img.jpg"),
+                        )
                     ),
-                    child: FadeInImage(
-                        image: NetworkImage(this.images[index].link),
-                        placeholder: AssetImage("assets/images/placeholder-img.jpg"),
-                    )
                 ),
             ),
         );
@@ -109,7 +119,7 @@ class CardScrollFeed extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: InkWell(
-                            onTap: () {},
+                            onTap: this.seeMoreAction(context, images[index]),
                             splashColor: Colors.transparent,
                             child: Container(
                                 padding: EdgeInsets.symmetric(

@@ -1,3 +1,4 @@
+import 'package:Epicture/components/buttons/uploadFloatingButton.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -28,17 +29,18 @@ class CustomBottomNavigationBar extends StatelessWidget {
     @override
     Widget build(BuildContext context) {
         return new Scaffold(
-            floatingActionButton: FloatingActionButton.extended(
-                elevation: 4.0,
+            /*floatingActionButton: FloatingActionButton.extended(
+                elevation: 20,
                 icon: const Icon(Icons.photo_camera),
                 label: const Text('Upload'),
                 backgroundColor: Colors.green,
                 onPressed: this.addNewPhoto,
-            ),
+            ),*/
+            floatingActionButton: UploadFloatingButton(),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
             bottomNavigationBar: BottomAppBar(
-                color: Color(0xFF1b1e40),
-                elevation: 800,
+                color: Color(0xFF1b1e44),
+                elevation: 20,
                 child: new Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
