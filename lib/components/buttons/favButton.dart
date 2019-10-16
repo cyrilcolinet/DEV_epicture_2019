@@ -23,7 +23,6 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
 
     final object.Image image;
     final List<String> links;
-    bool loaded = false;
 
     /// Constructor
     _FavButton(this.image, this.links);
@@ -35,11 +34,12 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
             print("true");
             postRequest("/image/" + image.images[0].id + "/favorite");
             setState(() {
+                links.remove(image.images[0].link);
                 image.images[0].favorite = false;
                 image.favoriteCount -= 1;
             });
+            return;
         }
-
         print("false");
         postRequest("/image/" + image.images[0].id + "/favorite");
         setState(() {
@@ -50,10 +50,8 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
 
     /// Build (and re-build) widget
     @override Widget build(BuildContext context) {
-      if (links.contains(image.images[0].link) && !loaded) {
+      if (links.contains(image.images[0].link))
         image.images[0].favorite = true;
-        loaded = true;
-      }
 
       return Container(
             child: Align(
