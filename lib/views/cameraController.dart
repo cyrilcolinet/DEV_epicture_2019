@@ -12,7 +12,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 class TakePictureScreen extends StatefulWidget {
   final CameraDescription camera;
 
-  const TakePictureScreen({
+   const TakePictureScreen({
     Key key,
     @required this.camera,
   }) : super(key: key);

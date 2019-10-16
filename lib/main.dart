@@ -23,7 +23,7 @@ class Epicture extends StatelessWidget {
           '/dashboard': (context) => new Dashboard(),
           '/account': (context) => new Account(),
           '/fav': (context) => new FavPictures(),
-          '/pictureInformation': (context) => PictureInformation()
+          '/pictureInformation': (context) => PictureInformation(),
       },
     );
   }

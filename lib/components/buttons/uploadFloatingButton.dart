@@ -1,5 +1,10 @@
 import 'dart:math' as math;
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:camera/camera.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:Epicture/pages/phonePicture.dart';
+
 
 class UploadFloatingButton extends StatefulWidget {
     @override
@@ -9,8 +14,23 @@ class UploadFloatingButton extends StatefulWidget {
 class _UploadFloatingButton extends State<UploadFloatingButton>
     with TickerProviderStateMixin {
 
+    File picture;
+    bool loaded = false;
     AnimationController animController;
 
+    Future getPicture(bool isCamera) async {
+        File Picture;
+
+        if (isCamera) {
+            Picture = await ImagePicker.pickImage(source: ImageSource.camera);
+        } else {
+            Picture = await ImagePicker.pickImage(source: ImageSource.gallery);
+        }
+        setState(() {
+            picture = Picture;
+            loaded = true;
+        });
+    }
     /// When widget start init of state
     @override void initState() {
         super.initState();
@@ -23,6 +43,9 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
     }
 
     @override Widget build(BuildContext context) {
+        if (loaded) {
+            return PictureScreen(picture: picture);
+        }
         return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -49,7 +72,9 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                     icon: const Icon(Icons.library_add),
                                     label: const Text('Choose'),
                                     backgroundColor: Colors.blue,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                        getPicture(false);
+                                    },
                                 )
                             ),
                         ),
@@ -73,7 +98,9 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                     icon: const Icon(Icons.photo_camera),
                                     label: const Text('Take'),
                                     backgroundColor: Colors.blue,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                        getPicture(true);
+                                    },
                                 )
                             ),
                         )
