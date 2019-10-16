@@ -1,4 +1,3 @@
-import 'package:Epicture/components/Drawer.dart';
 import 'package:Epicture/components/customBottomNavigationBar.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +31,6 @@ class Layout extends StatelessWidget {
                     )
                 ),
                 child: Scaffold(
-                    drawer: new SlideMenu(),
                     backgroundColor: Colors.transparent,
                     body: SafeArea(
                         key: Key('layout'),
@@ -43,9 +41,3 @@ class Layout extends StatelessWidget {
         );
     }
 }
-
-//SingleChildScrollView(
-//                            child: Column(
-//                                children: <Widget>[this.body],
-//                            ),
-//                        )
