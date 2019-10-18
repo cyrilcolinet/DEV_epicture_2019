@@ -1,3 +1,4 @@
+import 'package:Epicture/components/buttons/uploadButton.dart';
 import 'package:Epicture/components/buttons/uploadFloatingButton.dart';
 import 'package:flutter/material.dart';
 
@@ -5,92 +6,87 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
     // Class variables
     final Widget child;
+    final Function floatingMethod;
 
     /// CustomBottomNavigationBar constructor
-    CustomBottomNavigationBar({this.child});
+    CustomBottomNavigationBar({@required this.child, this.floatingMethod});
 
-    /// Emulate navigation and change current child
-    void changeChildContent(Widget newChild) {
+    Widget displayFloatingButton(BuildContext context) {
+        // Current route is upload too, bye bye
+        if (ModalRoute.of(context).settings.name == '/uploadImage') {
+            return UploadButton(onPressed: this.floatingMethod);
+        }
 
+        return UploadFloatingButton();
     }
 
-    void addNewPhoto() {
+    Widget displayBottomNavigationBar(BuildContext context) {
+        // Current route is upload, bye
+        if (ModalRoute.of(context).settings.name == '/uploadImage')
+            return null;
 
-    }
-
-    void goToMenu(BuildContext context) {
-    }
-
-    void searchImage() {
-
+        return BottomAppBar(
+            color: Color(0xFF1b1e44),
+            elevation: 20,
+            child: new Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                    Row(
+                        children: <Widget>[
+                            SizedBox(width: 15),
+                            IconButton(
+                                icon: Icon(Icons.dashboard),
+                                color: ModalRoute.of(context).settings.name == '/dashboard' ? Colors.green : Colors.white,
+                                onPressed: () {
+                                    if (ModalRoute.of(context).settings.name != '/dashboard')
+                                        Navigator.of(context).pushReplacementNamed('/dashboard');
+                                },
+                            ),
+                            SizedBox(width: 15),
+                            IconButton(
+                                icon: Icon(Icons.favorite),
+                                color: ModalRoute.of(context).settings.name == '/fav' ? Colors.green : Colors.white,
+                                onPressed: () {
+                                    Navigator.of(context).pushReplacementNamed("/fav");
+                                }
+                            ),
+                        ],
+                    ),
+                    Row(
+                        children: <Widget>[
+                            IconButton(
+                                icon: Icon(Icons.people),
+                                color: ModalRoute.of(context).settings.name == '/account' ? Colors.green : Colors.white,
+                                onPressed: () {
+                                    if (ModalRoute.of(context).settings.name != '/account')
+                                        Navigator.of(context).pushReplacementNamed('/account');
+                                },
+                            ),
+                            SizedBox(width: 15),
+                            IconButton(
+                                icon: Icon(Icons.settings),
+                                color: ModalRoute.of(context).settings.name == '/settings' ? Colors.green : Colors.white,
+                                onPressed: () {
+                                    if (ModalRoute.of(context).settings.name != '/settings')
+                                        Navigator.of(context).pushReplacementNamed('/settings');
+                                },
+                            ),
+                            SizedBox(width: 15),
+                        ],
+                    )
+                ],
+            ),
+        );
     }
 
     /// Build content and display bottom navigation bar
     @override
     Widget build(BuildContext context) {
         return new Scaffold(
-            /*floatingActionButton: FloatingActionButton.extended(
-                elevation: 20,
-                icon: const Icon(Icons.photo_camera),
-                label: const Text('Upload'),
-                backgroundColor: Colors.green,
-                onPressed: this.addNewPhoto,
-            ),*/
-            floatingActionButton: UploadFloatingButton(),
+            floatingActionButton: this.displayFloatingButton(context),
             floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            bottomNavigationBar: BottomAppBar(
-                color: Color(0xFF1b1e44),
-                elevation: 20,
-                child: new Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                        Row(
-                            children: <Widget>[
-                                SizedBox(width: 15),
-                                IconButton(
-                                    icon: Icon(Icons.dashboard),
-                                    color: ModalRoute.of(context).settings.name == '/dashboard' ? Colors.green : Colors.white,
-                                    onPressed: () {
-                                        if (ModalRoute.of(context).settings.name != '/dashboard')
-                                            Navigator.of(context).pushReplacementNamed('/dashboard');
-                                    },
-                                ),
-                                SizedBox(width: 15),
-                                IconButton(
-                                    icon: Icon(Icons.favorite),
-                                    color: ModalRoute.of(context).settings.name == '/fav' ? Colors.green : Colors.white,
-                                    onPressed: () {
-                                        Navigator.of(context).pushReplacementNamed("/fav");
-                                    }
-                                ),
-                            ],
-                        ),
-                        Row(
-                            children: <Widget>[
-                                IconButton(
-                                    icon: Icon(Icons.people),
-                                    color: ModalRoute.of(context).settings.name == '/account' ? Colors.green : Colors.white,
-                                    onPressed: () {
-                                        if (ModalRoute.of(context).settings.name != '/account')
-                                            Navigator.of(context).pushReplacementNamed('/account');
-                                    },
-                                ),
-                                SizedBox(width: 15),
-                                IconButton(
-                                    icon: Icon(Icons.settings),
-                                    color: ModalRoute.of(context).settings.name == '/settings' ? Colors.green : Colors.white,
-                                    onPressed: () {
-                                        if (ModalRoute.of(context).settings.name != '/settings')
-                                            Navigator.of(context).pushReplacementNamed('/settings');
-                                    },
-                                ),
-                                SizedBox(width: 15),
-                            ],
-                        )
-                    ],
-                ),
-            ),
+            bottomNavigationBar: this.displayBottomNavigationBar(context),
             body: this.child,
         );
     }

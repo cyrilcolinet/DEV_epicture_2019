@@ -1,5 +1,5 @@
 import 'package:Epicture/objects/image.dart' as object;
-import 'package:Epicture/request/request.dart';
+import 'package:Epicture/utils/request.dart';
 import 'package:flutter/material.dart';
 
 class VoteButton extends StatefulWidget {

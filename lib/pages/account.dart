@@ -3,7 +3,7 @@ import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/components/masonryView.dart';
 import 'package:Epicture/objects/accountImage.dart';
 import 'package:Epicture/objects/user.dart';
-import 'package:Epicture/request/request.dart';
+import 'package:Epicture/utils/request.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -212,7 +212,7 @@ class _Account extends State<Account> {
 
                                             SizedBox(
                                                 width: MediaQuery.of(context).size.width,
-                                                height: MediaQuery.of(context).size.height - 170,
+                                                height: (MediaQuery.of(context).size.height / 3) * 2 + 50,
                                                 child: MasonryView.builder(
                                                     itemCount: this.images.length,
                                                     mainAxisSpacing: 10.0,

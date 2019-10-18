@@ -2,8 +2,6 @@ import 'dart:io';
 import 'package:Epicture/objects/arguments/uploadImageArguments.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:Epicture/pages/phonePicture.dart';
-
 
 class UploadFloatingButton extends StatefulWidget {
     @override
@@ -21,6 +19,10 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
         return () async {
             File picture = await ImagePicker.pickImage(source: source);
 
+            // Check if picture is null or not
+            if (picture == null)
+                return;
+
             // Redirect to route
             Navigator.pushNamed(context, '/uploadImage',
                 arguments: UploadImageArguments(picture)
@@ -36,7 +38,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
         // Configure animation controller
         this.animController = new AnimationController(
             vsync: this,
-            duration: const Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 700),
         );
     }
 
@@ -59,7 +61,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                             child: ScaleTransition(
                                 scale: CurvedAnimation(
                                     parent: this.animController,
-                                    curve: Interval(0.0, 1.0 - 1 / 4.0,
+                                    curve: Interval(0.0, 0.7 - 1 / 4.0,
                                         curve: Curves.easeOut
                                     ),
                                 ),
@@ -83,7 +85,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                             child: ScaleTransition(
                                 scale: CurvedAnimation(
                                     parent: this.animController,
-                                    curve: Interval(0.0, 1.0 - 2 / 4.0,
+                                    curve: Interval(0.0, 0.7 - 2 / 4.0,
                                         curve: Curves.easeOut
                                     ),
                                 ),

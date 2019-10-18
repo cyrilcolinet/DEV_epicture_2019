@@ -1,7 +1,7 @@
 import 'package:Epicture/components/cardScrollFeed.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/objects/image.dart' as object;
-import 'package:Epicture/request/request.dart';
+import 'package:Epicture/utils/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 

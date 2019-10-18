@@ -2,11 +2,10 @@ import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/components/masonryView.dart';
 import 'package:Epicture/objects/image.dart' as object;
-import 'package:Epicture/request/request.dart';
+import 'package:Epicture/utils/request.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class FavPictures extends StatefulWidget {
     @override

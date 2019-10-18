@@ -1,8 +1,10 @@
-import 'package:Epicture/components/buttons/goToHomeButton.dart';
-import 'package:Epicture/components/buttons/uploadButton.dart';
+import 'dart:convert' as cipher;
+import 'dart:io';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/objects/arguments/uploadImageArguments.dart';
+import 'package:Epicture/utils/request.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 /// UploadImage page for the result of gallery image or camera
 /// Extended from [StatefulWidget] class
@@ -15,29 +17,41 @@ class UploadImage extends StatefulWidget {
 /// Contains name, and description text fields
 class _UploadImage extends State<UploadImage> {
 
+    // Controllers for text inputs
+    final TextEditingController name = TextEditingController();
+    final TextEditingController description = TextEditingController();
+
+    Map<String, String> convertDataIntoJson(File picture, String title, String desc) {
+        List<int> imageBytes = picture.readAsBytesSync();
+
+        // Add fields and return map
+        return {
+            "image": cipher.base64Encode(imageBytes),
+            "title": title,
+            "description": desc
+        };
+    }
+
     /// Display image
     /// Return [Widget]
     Widget displayImage(BuildContext context, UploadImageArguments args) {
-        return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(3.0, 6.0),
-                                blurRadius: 10.0
-                            )
-                        ]
-                    ),
-                    child: FadeInImage(
-                        image: FileImage(args.picture),
-                        placeholder: AssetImage("assets/images/placeholder-img.jpg"),
-                    )
+        return ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                        BoxShadow(
+                            color: Colors.black12,
+                            offset: Offset(3.0, 6.0),
+                            blurRadius: 10.0
+                        )
+                    ]
                 ),
+                child: FadeInImage(
+                    image: FileImage(args.picture),
+                    placeholder: AssetImage("assets/images/placeholder-img.jpg"),
+                )
             ),
         );
     }
@@ -51,7 +65,7 @@ class _UploadImage extends State<UploadImage> {
 
                     // Title
                     TextField(
-                        autofocus: true,
+                        controller: this.name,
                         autocorrect: false,
                         textInputAction: TextInputAction.continueAction,
                         cursorColor: Colors.green,
@@ -86,6 +100,7 @@ class _UploadImage extends State<UploadImage> {
 
                     // Description
                     TextField(
+                        controller: this.description,
                         maxLines: null,
                         autocorrect: false,
                         textInputAction: TextInputAction.send,
@@ -121,28 +136,11 @@ class _UploadImage extends State<UploadImage> {
                 onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
                 child: Column(
                     children: <Widget>[
-                        Padding(
-                            padding: EdgeInsets.only(top: 20),
-                            child: Row(
-                                children: <Widget>[
-                                    GoToHomeButton(),
-                                    Text("Upload",
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 40.0,
-                                            fontFamily: "Calibre-Semibold",
-                                            letterSpacing: 1.0,
-                                        )
-                                    ),
-                                ],
-                            ),
-                        ),
 
                         Padding(
                             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                             child: Column(
                                 children: <Widget>[
-
                                     // Display image
                                     this.displayImage(context, args),
 
@@ -165,11 +163,7 @@ class _UploadImage extends State<UploadImage> {
                                     // Text field
                                     this.displayTextFields(context),
 
-                                    // Upload button
-                                    Padding(
-                                        padding: EdgeInsets.only(bottom: 40, top: 20),
-                                        child: UploadButton(),
-                                    )
+                                    SizedBox(height: 70)
                                 ],
                             ),
                         ),
@@ -184,6 +178,35 @@ class _UploadImage extends State<UploadImage> {
     Widget build(BuildContext context) {
         final UploadImageArguments args = ModalRoute.of(context).settings.arguments;
 
-        return Layout(body: this.displayContent(args));
+        return Layout(
+            body: this.displayContent(args),
+            floatingMethod: () {
+                if (this.name.text.length == 0)
+                    return;
+
+                // Show loader dialog
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                        return SizedBox(
+                            height: MediaQuery.of(context).size.height - 130,
+                            child: SpinKitFadingCube(
+                                color: Colors.white,
+                                size: 60,
+                            ),
+                        );
+                    }
+                );
+
+                // Upload file and dismiss loader when ok$
+                postRequest("/upload",
+                    isAnonymousRequest: false,
+                    json: this.convertDataIntoJson(args.picture, this.name.text, this.description.text)
+                ).then((data) {
+                    Navigator.of(context, rootNavigator: true).pop('dialog');
+                    Navigator.of(context).pushReplacementNamed('/dashboard');
+                });
+            }
+        );
     }
 }

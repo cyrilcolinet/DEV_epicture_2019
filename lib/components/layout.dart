@@ -7,17 +7,19 @@ class Layout extends StatelessWidget {
 
     // Configure default values
     final Widget body;
+    final Function floatingMethod;
 
     // Class variables
     int selectedPage = 0;
 
     // Constructor
-    Layout({this.body});
+    Layout({@required this.body, this.floatingMethod});
 
     /// Build header
     @override
     Widget build(BuildContext context) {
         return CustomBottomNavigationBar(
+            floatingMethod: this.floatingMethod,
             child: Container(
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
@@ -31,6 +33,7 @@ class Layout extends StatelessWidget {
                     )
                 ),
                 child: Scaffold(
+                    resizeToAvoidBottomPadding: false,
                     backgroundColor: Colors.transparent,
                     body: SafeArea(
                         key: Key('layout'),

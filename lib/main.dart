@@ -3,6 +3,7 @@ import 'package:Epicture/pages/dashboard.dart';
 import 'package:Epicture/pages/favPictures.dart';
 import 'package:Epicture/pages/login.dart';
 import 'package:Epicture/pages/pictureInformation.dart';
+import 'package:Epicture/pages/settings.dart';
 import 'package:Epicture/pages/splashscreen.dart';
 import 'package:Epicture/pages/uploadImage.dart';
 import 'package:flutter/material.dart';
@@ -21,9 +22,10 @@ class Epicture extends StatelessWidget {
       title: 'Epicture',
       routes: {
           '/login': (context) => Login(),
-          '/dashboard': (context) => new Dashboard(),
-          '/account': (context) => new Account(),
-          '/fav': (context) => new FavPictures(),
+          '/dashboard': (context) => Dashboard(),
+          '/account': (context) => Account(),
+          '/fav': (context) => FavPictures(),
+          '/settings': (context) => Settings(),
           '/pictureInformation': (context) => PictureInformation(),
           '/uploadImage': (context) => UploadImage()
       },

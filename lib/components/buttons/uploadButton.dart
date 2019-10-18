@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 /// UploadImage page for the result of gallery image or camera
 /// Extended from [StatefulWidget] class
 class UploadButton extends StatefulWidget {
+
+    // Class variables
     final Key key;
+    final Function onPressed;
 
     /// Constructor
-    UploadButton({this.key});
+    UploadButton({this.key, @required this.onPressed});
 
     /// Create [_UploadButton] state
     _UploadButton createState() => _UploadButton();
@@ -19,40 +22,38 @@ class _UploadButton extends State<UploadButton> {
 
     @override
     Widget build(BuildContext context) {
-        return Container(
-            key: this.widget.key,
-            width: MediaQuery.of(context).size.width / 2,
-            child: InkWell(
-                onTap: () {},
-                splashColor: Colors.transparent,
-                child: Container(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 20.0,
-                        vertical: 10.0
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(30.0)
-                    ),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                            Icon(Icons.file_upload,
-                                size: 16,
-                                color: Colors.white,
+        return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(bottom: 50, right: 15),
+                            child: FloatingActionButton.extended(
+                                elevation: 10,
+                                heroTag: "reset_form",
+                                icon: const Icon(Icons.close),
+                                label: const Text('Reset'),
+                                backgroundColor: Colors.red,
+                                onPressed: () => Navigator.of(context).pop(),
                             ),
-                            SizedBox(width: 5),
-                            Text("Go upload !",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 23,
-                                    fontFamily: "SF-Pro-Text-Regular"
-                                )
+                        ),
+
+                        Padding(
+                            padding: EdgeInsets.only(bottom: 50, left: 15),
+                            child: FloatingActionButton.extended(
+                                elevation: 10,
+                                heroTag: "send_form",
+                                icon: const Icon(Icons.file_upload),
+                                label: const Text('Upload'),
+                                backgroundColor: Colors.green,
+                                onPressed: this.widget.onPressed,
                             ),
-                        ],
-                    ),
+                        ),
+                    ],
                 ),
-            ),
+            ],
         );
     }
 }

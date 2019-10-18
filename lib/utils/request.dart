@@ -16,13 +16,9 @@ Future<Map<String, dynamic>> getRequest(String url, String section) async {
         },
     );
 
-    // Return decoded responses
-    if (response.statusCode == 200) {
-        print(response.statusCode);
-        return json.decode(response.body);
-    }
     print(response.statusCode);
     print(response.reasonPhrase);
+    return json.decode(response.body);
 }
 
 Future<String> postRequest(String url, {bool isAnonymousRequest = false, Map json}) async {

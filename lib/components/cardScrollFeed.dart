@@ -2,6 +2,7 @@ import 'package:Epicture/components/buttons/favButton.dart';
 import 'package:Epicture/components/buttons/voteButton.dart';
 import 'package:Epicture/objects/arguments/pictureInformationArguments.dart';
 import 'package:Epicture/objects/image.dart' as object;
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 /// CardScrollFeed class
@@ -47,7 +48,7 @@ class CardScrollFeed extends StatelessWidget {
                             ]
                         ),
                         child: FadeInImage(
-                            image: NetworkImage(this.images[index].link),
+                            image: CachedNetworkImageProvider(this.images[index].link),
                             placeholder: AssetImage("assets/images/placeholder-img.jpg"),
                         )
                     ),
@@ -150,40 +151,6 @@ class CardScrollFeed extends StatelessWidget {
                         ),
                     ),
 
-                    // Comment button
-                    Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: InkWell(
-                            onTap: () {},
-                            splashColor: Colors.transparent,
-                            child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 22.0,
-                                    vertical: 6.0
-                                ),
-                                decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    borderRadius: BorderRadius.circular(20.0)
-                                ),
-                                child: Row(
-                                    children: <Widget>[
-                                        Icon(Icons.comment,
-                                            size: 16,
-                                            color: Colors.white,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Text("Comment",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontFamily: "SF-Pro-Text-Regular"
-                                            )
-                                        )
-                                    ],
-                                ),
-                            ),
-                        ),
-                    )
                 ],
             )
         );
