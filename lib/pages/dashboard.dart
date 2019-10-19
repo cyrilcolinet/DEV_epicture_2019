@@ -107,7 +107,7 @@ class _DashboardState extends State<Dashboard> {
             child: Column(
                 children: <Widget>[
                     Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 20),
+                        padding: EdgeInsets.only(left: 20.0, top: 20, bottom: 2),
                         child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[

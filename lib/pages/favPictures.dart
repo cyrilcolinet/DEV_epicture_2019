@@ -88,7 +88,7 @@ class _FavPicturesState extends State<FavPictures> {
                     ),
 
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                         child: Stack(
                             children: <Widget>[
                                 Container(
@@ -97,20 +97,11 @@ class _FavPicturesState extends State<FavPictures> {
 
                                             SizedBox(
                                                 width: MediaQuery.of(context).size.width,
-                                                height: MediaQuery.of(context).size.height - 170,
-                                                child: MasonryView.builder(
-                                                    itemCount: this.images.length,
-                                                    mainAxisSpacing: 10.0,
-                                                    crossAxisSpacing: 10.0,
-                                                    mainAxisRatio: 1.0,
-                                                    crossAxisSpans: 4,
-                                                    itemBuilder: this.buildImagesMasonry,
-                                                    tileSizeBuilder: (index) {
-                                                        if (index >= tileSizes.length)
-                                                            return null;
-                                                        return tileSizes[index];
-                                                    }
-                                                ),
+                                                height: MediaQuery.of(context).size.height - 250,
+                                                child: GridView.count(
+                                                    children: List.generate(this.images.length, this.buildImagesGrid),
+                                                    crossAxisCount: 3,
+                                                )
                                             ),
 
                                         ],
@@ -124,29 +115,35 @@ class _FavPicturesState extends State<FavPictures> {
         );
     }
 
-
-    Widget buildImagesMasonry(BuildContext context, int index) {
-        if (index >= tileSizes.length)
-            return null;
-
-        // Image with loader
-        return ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                        BoxShadow(
-                            color: Colors.black12,
-                            offset: Offset(3.0, 6.0),
-                            blurRadius: 10.0
-                        )
-                    ]
+    Widget buildImagesGrid(int index) {
+        return Padding(
+            padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(5),
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                            BoxShadow(
+                                color: Colors.black12,
+                                offset: Offset(3.0, 6.0),
+                                blurRadius: 10.0
+                            )
+                        ]
+                    ),
+                    child: AspectRatio(
+                        aspectRatio: 3 / 2,
+                        child: CachedNetworkImage(
+                            imageUrl: this.images[index].link,
+                            placeholder: (BuildContext context, String str) {
+                                return SpinKitFadingCube(
+                                    color: Colors.black26,
+                                    size: 30,
+                                );
+                            },
+                        ),
+                    ),
                 ),
-                child: FadeInImage(
-                    image: CachedNetworkImageProvider(this.images[index].link),
-                    placeholder: AssetImage("assets/images/placeholder-img.jpg"),
-                )
             ),
         );
     }
