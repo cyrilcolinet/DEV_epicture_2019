@@ -23,15 +23,6 @@ class Layout extends StatelessWidget {
             child: Container(
                 decoration: BoxDecoration(
                     color: Color(0xFF1b1e44),
-                    /*gradient: LinearGradient(
-                        colors: [
-                            Color(0xFF1b1e44),
-                            Color(0xFF2d3447),
-                        ],
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
-                        tileMode: TileMode.clamp
-                    )*/
                 ),
                 child: this.body
             ),

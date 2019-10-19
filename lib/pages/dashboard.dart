@@ -5,20 +5,23 @@ import 'package:Epicture/utils/request.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+/// Dashboard Stateful [Widget]
+/// Implements the feed of viral images
 class Dashboard extends StatefulWidget {
     @override
     _DashboardState createState() => new _DashboardState();
 }
 
+/// Dashboard State of the [Dashboard] Stateful Widget
 class _DashboardState extends State<Dashboard> {
 
-    bool loaded = false;
-
     // Class variables
+    bool loaded = false;
     List<object.Image> images = [];
     List<String> titles = [];
     List<String> links = [];
 
+    /// Wait for all [Future] terminated
     Future getDataFutures() {
         return Future.wait([this.getViralUrls("hot", "viral", "day", "0"), this.parseAccountFavPictures()]);
     }
@@ -29,7 +32,6 @@ class _DashboardState extends State<Dashboard> {
         Future<Map<String, dynamic>> request = getRequest(url, "data");
         List<object.Image> tmpImages = [];
 
-        print("getting viral url");
         // Wait for request result
         return request.then((data) {
             List<dynamic> values = data["data"];
@@ -42,16 +44,14 @@ class _DashboardState extends State<Dashboard> {
                     tmpImages.add(image);
                 }
             });
-            print("returning viral images");
             return tmpImages;
-            // Change and set state to loaded
         });
     }
 
+    /// Parsing account favorites pictures
     Future parseAccountFavPictures() {
         Future request = getRequest("/account/me/favorites/", "data");
 
-        print("getting fav pictures");
         return request.then((data) {
             List<String> links = [];
             List<dynamic> values = data["data"];
@@ -64,7 +64,6 @@ class _DashboardState extends State<Dashboard> {
                     links.add(image.link);
                 }
             });
-            print("returning fav pictures");
             return links;
         });
     }

@@ -2,13 +2,16 @@ import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:flutter/material.dart';
 
+/// Search class with search bar and results
 class Search extends StatelessWidget {
 
+    /// Build a [Widget]
     @override
     Widget build(BuildContext context) {
         return Layout(body: this.displayContent(context));
     }
 
+    /// Display content in the [Layout]
     Widget displayContent(BuildContext context) {
         return SingleChildScrollView(
             child: Column(
