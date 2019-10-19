@@ -1,4 +1,5 @@
 import 'package:Epicture/components/buttons/goToHomeButton.dart';
+import 'package:Epicture/components/imageGridTile.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/components/masonryView.dart';
 import 'package:Epicture/objects/image.dart' as object;
@@ -99,7 +100,9 @@ class _FavPicturesState extends State<FavPictures> {
                                                 width: MediaQuery.of(context).size.width,
                                                 height: MediaQuery.of(context).size.height - 250,
                                                 child: GridView.count(
-                                                    children: List.generate(this.images.length, this.buildImagesGrid),
+                                                    children: List.generate(this.images.length, (int index) {
+                                                        return ImageGridTile(image: this.images[index]);
+                                                    }),
                                                     crossAxisCount: 3,
                                                 )
                                             ),
@@ -115,36 +118,4 @@ class _FavPicturesState extends State<FavPictures> {
         );
     }
 
-    Widget buildImagesGrid(int index) {
-        return Padding(
-            padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(3.0, 6.0),
-                                blurRadius: 10.0
-                            )
-                        ]
-                    ),
-                    child: AspectRatio(
-                        aspectRatio: 3 / 2,
-                        child: CachedNetworkImage(
-                            imageUrl: this.images[index].link,
-                            placeholder: (BuildContext context, String str) {
-                                return SpinKitFadingCube(
-                                    color: Colors.black26,
-                                    size: 30,
-                                );
-                            },
-                        ),
-                    ),
-                ),
-            ),
-        );
-    }
 }

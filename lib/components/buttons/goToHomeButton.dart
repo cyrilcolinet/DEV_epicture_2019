@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 /// StatelessWidget extended
 class GoToHomeButton extends StatelessWidget {
 
+    /// Go back in view for function
     Function performBackAction(BuildContext context) {
         return () {
             NavigatorState nav = Navigator.of(context);

@@ -1,4 +1,6 @@
+import 'package:Epicture/components/accountResume.dart';
 import 'package:Epicture/components/buttons/goToHomeButton.dart';
+import 'package:Epicture/components/imageGridTile.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/components/masonryView.dart';
 import 'package:Epicture/objects/accountImage.dart';
@@ -66,6 +68,14 @@ class _Account extends State<Account> {
         return request.then((data) => User.fromJson(data['data']));
     }
 
+    // Log-out user
+    void logout() {
+        SharedPreferences.getInstance().then((prefs) => prefs.clear());
+
+        // Redirect to webview
+        Navigator.of(context).pushReplacementNamed('/login');
+    }
+
     /// On state init
     @override
     void initState() {
@@ -104,17 +114,32 @@ class _Account extends State<Account> {
                     Padding(
                         padding: EdgeInsets.only(top: 20),
                         child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
-                                GoToHomeButton(),
-                                Text("Account",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 40.0,
-                                        fontFamily: "Calibre-Semibold",
-                                        letterSpacing: 1.0,
-                                    )
+                                Row(
+                                    children: <Widget>[
+                                        GoToHomeButton(),
+                                        Text("Account",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 40.0,
+                                                fontFamily: "Calibre-Semibold",
+                                                letterSpacing: 1.0,
+                                            )
+                                        ),
+                                    ],
                                 ),
+
+                                Padding(
+                                    padding: EdgeInsets.only(bottom: 10, right: 10),
+                                    child: IconButton(
+                                        onPressed: this.logout,
+                                        icon: Icon(Icons.exit_to_app,
+                                            color: Colors.white,
+                                            size: 25,
+                                        ),
+                                    )
+                                )
                             ],
                         ),
                     ),
@@ -128,65 +153,18 @@ class _Account extends State<Account> {
                                         children: <Widget>[
                                             Stack(
                                                 children: <Widget>[
-                                                    Container(
-                                                        padding: EdgeInsets.all(16.0),
-                                                        margin: EdgeInsets.only(top: 16.0),
-                                                        decoration: BoxDecoration(
-                                                            color: Colors.white,
-                                                            borderRadius: BorderRadius.circular(5.0)
-                                                        ),
-                                                        child: Column(
-                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                            children: <Widget>[
-                                                                Container(
-                                                                    margin: EdgeInsets.only(left: 96.0),
-                                                                    child: Column(
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        children: <Widget>[
-                                                                            Text(userData.url, style: Theme.of(context).textTheme.title,),
-                                                                            SizedBox(height: 30)
-                                                                        ],
-                                                                    ),
-                                                                ),
-                                                                SizedBox(height: 10.0),
-                                                                Row(
-                                                                    children: <Widget>[
-                                                                        Expanded(
-                                                                            child: Column(
-                                                                                children: <Widget>[
-                                                                                    Text("Reputation"),
-                                                                                    Text(userData.reputation.toString())
-                                                                                ],
-                                                                            ),
-                                                                        ),
-                                                                        Expanded(
-                                                                            child: Column(
-                                                                                children: <Widget>[
-                                                                                    Text("Grade"),
-                                                                                    Text(userData.reputationName)
-                                                                                ],
-                                                                            ),
-                                                                        ),
-                                                                        Expanded(
-                                                                            child: Column(
-                                                                                children: <Widget>[
-                                                                                    Text("Uploads"),
-                                                                                    Text(images.length.toString())
-                                                                                ],
-                                                                            ),
-                                                                        ),
-                                                                    ],
-                                                                ),
-                                                            ],
-                                                        ),
-                                                    ),
+
+                                                    // Account small resume
+                                                    AccountResume(userData: this.userData, imageLength: this.images.length),
+
+                                                    // Picture image
                                                     Container(
                                                         height: 80,
                                                         width: 80,
                                                         decoration: BoxDecoration(
                                                             borderRadius: BorderRadius.circular(10.0),
                                                             image: DecorationImage(
-                                                                image: CachedNetworkImageProvider(userData.avatar),
+                                                                image: NetworkImage(userData.avatar),
                                                                 fit: BoxFit.cover
                                                             )
                                                         ),
@@ -215,7 +193,9 @@ class _Account extends State<Account> {
                                                 height: MediaQuery.of(context).size.height - 430,
                                                 child: GridView.count(
                                                     //cacheExtent: 12,
-                                                    children: List.generate(this.images.length, this.buildImagesGrid),
+                                                    children: List.generate(this.images.length, (int index) {
+                                                        return ImageGridTile(image: this.images[index]);
+                                                    }),
                                                     crossAxisCount: 2,
                                                 )
                                             ),
@@ -227,39 +207,6 @@ class _Account extends State<Account> {
                         ),
                     ),
                 ],
-            ),
-        );
-    }
-
-    Widget buildImagesGrid(int index) {
-        return Padding(
-            padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(5),
-                child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                            BoxShadow(
-                                color: Colors.black12,
-                                offset: Offset(3.0, 6.0),
-                                blurRadius: 10.0
-                            )
-                        ]
-                    ),
-                    child: AspectRatio(
-                        aspectRatio: 3 / 2,
-                        child: CachedNetworkImage(
-                            imageUrl: this.images[index].link,
-                            placeholder: (BuildContext context, String str) {
-                                return SpinKitFadingCube(
-                                    color: Colors.black26,
-                                    size: 30,
-                                );
-                            },
-                        ),
-                    ),
-                ),
             ),
         );
     }
