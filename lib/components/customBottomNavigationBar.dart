@@ -26,16 +26,16 @@ class CustomBottomNavigationBar extends StatelessWidget {
             return null;
 
         return BottomAppBar(
-            color: Color(0xFF1b1e44),
-            elevation: 20,
-            child: new Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                    Row(
-                        children: <Widget>[
-                            SizedBox(width: 15),
-                            IconButton(
+            elevation: 0,
+            child: Container(
+                color: Color(0xFF1b1e44),
+                child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                        Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: IconButton(
                                 icon: Icon(Icons.dashboard),
                                 color: ModalRoute.of(context).settings.name == '/dashboard' ? Colors.green : Colors.white,
                                 onPressed: () {
@@ -43,39 +43,35 @@ class CustomBottomNavigationBar extends StatelessWidget {
                                         Navigator.of(context).pushReplacementNamed('/dashboard');
                                 },
                             ),
-                            SizedBox(width: 15),
-                            IconButton(
+                        ),
+                        IconButton(
+                            icon: Icon(Icons.search),
+                            color: ModalRoute.of(context).settings.name == '/search' ? Colors.green : Colors.white,
+                            onPressed: () {
+                                Navigator.of(context).pushReplacementNamed("/search");
+                            }
+                        ),
+                        SizedBox(width: 80),
+                        IconButton(
+                            icon: Icon(Icons.people),
+                            color: ModalRoute.of(context).settings.name == '/account' ? Colors.green : Colors.white,
+                            onPressed: () {
+                                if (ModalRoute.of(context).settings.name != '/account')
+                                    Navigator.of(context).pushReplacementNamed('/account');
+                            },
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(right: 10),
+                            child: IconButton(
                                 icon: Icon(Icons.favorite),
                                 color: ModalRoute.of(context).settings.name == '/fav' ? Colors.green : Colors.white,
                                 onPressed: () {
                                     Navigator.of(context).pushReplacementNamed("/fav");
                                 }
                             ),
-                        ],
-                    ),
-                    Row(
-                        children: <Widget>[
-                            IconButton(
-                                icon: Icon(Icons.people),
-                                color: ModalRoute.of(context).settings.name == '/account' ? Colors.green : Colors.white,
-                                onPressed: () {
-                                    if (ModalRoute.of(context).settings.name != '/account')
-                                        Navigator.of(context).pushReplacementNamed('/account');
-                                },
-                            ),
-                            SizedBox(width: 15),
-                            IconButton(
-                                icon: Icon(Icons.settings),
-                                color: ModalRoute.of(context).settings.name == '/settings' ? Colors.green : Colors.white,
-                                onPressed: () {
-                                    if (ModalRoute.of(context).settings.name != '/settings')
-                                        Navigator.of(context).pushReplacementNamed('/settings');
-                                },
-                            ),
-                            SizedBox(width: 15),
-                        ],
-                    )
-                ],
+                        ),
+                    ],
+                ),
             ),
         );
     }
@@ -83,11 +79,17 @@ class CustomBottomNavigationBar extends StatelessWidget {
     /// Build content and display bottom navigation bar
     @override
     Widget build(BuildContext context) {
-        return new Scaffold(
-            floatingActionButton: this.displayFloatingButton(context),
-            floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-            bottomNavigationBar: this.displayBottomNavigationBar(context),
-            body: this.child,
+        return Container(
+            color: Color(0xFF1b1e44),
+            child: SafeArea(
+                child: Scaffold(
+                    extendBody: true,
+                    floatingActionButton: this.displayFloatingButton(context),
+                    floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+                    bottomNavigationBar: this.displayBottomNavigationBar(context),
+                    body: this.child,
+                ),
+            ),
         );
     }
 }

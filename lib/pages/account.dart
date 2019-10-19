@@ -190,7 +190,7 @@ class _Account extends State<Account> {
 
                                             SizedBox(
                                                 width: MediaQuery.of(context).size.width,
-                                                height: MediaQuery.of(context).size.height - 430,
+                                                height: (MediaQuery.of(context).size.height / 3) * 2 - 100,
                                                 child: GridView.count(
                                                     //cacheExtent: 12,
                                                     children: List.generate(this.images.length, (int index) {

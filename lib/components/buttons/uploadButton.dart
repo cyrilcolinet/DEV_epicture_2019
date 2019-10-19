@@ -29,24 +29,24 @@ class _UploadButton extends State<UploadButton> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                         Padding(
-                            padding: EdgeInsets.only(bottom: 50, right: 15),
+                            padding: EdgeInsets.only(right: 15),
                             child: FloatingActionButton.extended(
                                 elevation: 10,
                                 heroTag: "reset_form",
-                                icon: const Icon(Icons.close),
-                                label: const Text('Reset'),
+                                icon: const Icon(Icons.close, color: Colors.white),
+                                label: const Text('Reset', style: TextStyle(color: Colors.white)),
                                 backgroundColor: Colors.red,
                                 onPressed: () => Navigator.of(context).pop(),
                             ),
                         ),
 
                         Padding(
-                            padding: EdgeInsets.only(bottom: 50, left: 15),
+                            padding: EdgeInsets.only(left: 15),
                             child: FloatingActionButton.extended(
                                 elevation: 10,
                                 heroTag: "send_form",
-                                icon: const Icon(Icons.file_upload),
-                                label: const Text('Upload'),
+                                icon: const Icon(Icons.file_upload, color: Colors.white),
+                                label: const Text('Upload', style: TextStyle(color: Colors.white)),
                                 backgroundColor: Colors.green,
                                 onPressed: this.widget.onPressed,
                             ),

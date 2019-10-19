@@ -22,7 +22,8 @@ class Layout extends StatelessWidget {
             floatingMethod: this.floatingMethod,
             child: Container(
                 decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    color: Color(0xFF1b1e44),
+                    /*gradient: LinearGradient(
                         colors: [
                             Color(0xFF1b1e44),
                             Color(0xFF2d3447),
@@ -30,16 +31,9 @@ class Layout extends StatelessWidget {
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
                         tileMode: TileMode.clamp
-                    )
+                    )*/
                 ),
-                child: Scaffold(
-                    resizeToAvoidBottomPadding: false,
-                    backgroundColor: Colors.transparent,
-                    body: SafeArea(
-                        key: Key('layout'),
-                        child: this.body
-                    )
-                ),
+                child: this.body
             ),
         );
     }

@@ -11,7 +11,9 @@ class UploadFloatingButton extends StatefulWidget {
 class _UploadFloatingButton extends State<UploadFloatingButton>
     with TickerProviderStateMixin {
 
+    /// Class variables
     AnimationController animController;
+
 
     /// Take or get a picture from camera/gallery and pass it to [UploadImage]
     /// route.
@@ -47,6 +49,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
     Widget build(BuildContext context) {
         return Column(
             mainAxisSize: MainAxisSize.min,
+            //mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
 
                 // Other buttons
@@ -68,8 +71,8 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                 child: FloatingActionButton.extended(
                                     heroTag: "choose",
                                     elevation: 10,
-                                    icon: const Icon(Icons.library_add),
-                                    label: const Text('Choose'),
+                                    icon: const Icon(Icons.library_add, color: Colors.white),
+                                    label: const Text('Choose', style: TextStyle(color: Colors.white)),
                                     backgroundColor: Colors.blue,
                                     onPressed: this.takePictureFromFileOrCamera(context, ImageSource.gallery),
                                 )
@@ -92,8 +95,8 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                                 child: FloatingActionButton.extended(
                                     heroTag: "take",
                                     elevation: 10,
-                                    icon: const Icon(Icons.photo_camera),
-                                    label: const Text('Take'),
+                                    icon: const Icon(Icons.photo_camera, color: Colors.white),
+                                    label: const Text('Take', style: TextStyle(color: Colors.white)),
                                     backgroundColor: Colors.blue,
                                     onPressed: this.takePictureFromFileOrCamera(context, ImageSource.camera),
                                 )
@@ -104,9 +107,10 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
 
                 // Default floating button
                 FloatingActionButton.extended(
+                    elevation: 15,
                     heroTag: "upload",
-                    icon: const Icon(Icons.add_photo_alternate),
-                    label: const Text('Add'),
+                    icon: const Icon(Icons.add_photo_alternate, color: Colors.white),
+                    label: const Text('Add', style: TextStyle(color: Colors.white)),
                     backgroundColor: Colors.green,
                     onPressed: () {
                         if (this.animController.isDismissed) {
@@ -117,7 +121,7 @@ class _UploadFloatingButton extends State<UploadFloatingButton>
                     },
                 ),
 
-                SizedBox(height: 60)
+                SizedBox(height: 20)
 
             ],
         );

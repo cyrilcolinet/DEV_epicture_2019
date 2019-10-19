@@ -25,7 +25,7 @@ class AccountResume extends StatelessWidget {
                         child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
-                                Text(userData.url, style: Theme.of(context).textTheme.title,),
+                                Text(userData.url, style: Theme.of(context).textTheme.title),
                                 SizedBox(height: 30)
                             ],
                         ),
@@ -36,24 +36,24 @@ class AccountResume extends StatelessWidget {
                             Expanded(
                                 child: Column(
                                     children: <Widget>[
-                                        Text("Reputation"),
-                                        Text(userData.reputation.toString())
+                                        Text("Reputation", style: TextStyle(color: Colors.black)),
+                                        Text(userData.reputation.toString(), style: TextStyle(color: Colors.black))
                                     ],
                                 ),
                             ),
                             Expanded(
                                 child: Column(
                                     children: <Widget>[
-                                        Text("Grade"),
-                                        Text(userData.reputationName)
+                                        Text("Grade", style: TextStyle(color: Colors.black)),
+                                        Text(userData.reputationName, style: TextStyle(color: Colors.black))
                                     ],
                                 ),
                             ),
                             Expanded(
                                 child: Column(
                                     children: <Widget>[
-                                        Text("Uploads"),
-                                        Text(imageLength.toString())
+                                        Text("Uploads", style: TextStyle(color: Colors.black)),
+                                        Text(imageLength.toString(), style: TextStyle(color: Colors.black))
                                     ],
                                 ),
                             ),

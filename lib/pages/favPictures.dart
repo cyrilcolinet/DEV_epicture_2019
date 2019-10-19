@@ -71,12 +71,12 @@ class _FavPicturesState extends State<FavPictures> {
             child: Column(
                 children: <Widget>[
                     Padding(
-                        padding: EdgeInsets.only(left: 20.0, top: 20),
+                        padding: EdgeInsets.only(top: 20),
                         child: Row(
                             //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                                 GoToHomeButton(),
-                                Text("My Favourites",
+                                Text("Favourites",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 40.0,
@@ -98,7 +98,7 @@ class _FavPicturesState extends State<FavPictures> {
 
                                             SizedBox(
                                                 width: MediaQuery.of(context).size.width,
-                                                height: MediaQuery.of(context).size.height - 250,
+                                                height: MediaQuery.of(context).size.height - 200,
                                                 child: GridView.count(
                                                     children: List.generate(this.images.length, (int index) {
                                                         return ImageGridTile(image: this.images[index]);
