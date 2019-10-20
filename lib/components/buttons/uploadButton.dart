@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// UploadImage page for the result of gallery image or camera
-/// Extended from [StatefulWidget] class
-class UploadButton extends StatefulWidget {
+/// New class state implementation of [UploadButton] class Stateful
+/// Get picture and display it for post
+/// Contains name, and description text fields
+class UploadButton extends StatelessWidget {
 
     // Class variables
     final Key key;
@@ -11,15 +12,7 @@ class UploadButton extends StatefulWidget {
     /// Constructor
     UploadButton({this.key, @required this.onPressed});
 
-    /// Create [_UploadButton] state
-    _UploadButton createState() => _UploadButton();
-}
-
-/// New class state implementation of [UploadButton] class Stateful
-/// Get picture and display it for post
-/// Contains name, and description text fields
-class _UploadButton extends State<UploadButton> {
-
+    /// Build as a [Widget] and return it
     @override
     Widget build(BuildContext context) {
         return Column(
@@ -48,7 +41,7 @@ class _UploadButton extends State<UploadButton> {
                                 icon: const Icon(Icons.file_upload, color: Colors.white),
                                 label: const Text('Upload', style: TextStyle(color: Colors.white)),
                                 backgroundColor: Colors.green,
-                                onPressed: this.widget.onPressed,
+                                onPressed: this.onPressed,
                             ),
                         ),
                     ],
