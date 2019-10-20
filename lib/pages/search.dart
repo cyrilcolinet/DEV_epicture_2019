@@ -1,9 +1,21 @@
 import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/layout.dart';
+import 'package:Epicture/components/searchBar.dart';
+import 'package:Epicture/components/searchResults.dart';
+import 'package:Epicture/utils/request.dart';
 import 'package:flutter/material.dart';
+import 'package:Epicture/objects/image.dart' as object;
 
 /// Search class with search bar and results
 class Search extends StatelessWidget {
+
+    /// Singleton management
+    static Search _instance;
+    factory Search() => _instance ??= new Search._();
+    Search._();
+
+    /// Class variables
+    final TextEditingController searchController = TextEditingController();
 
     /// Build a [Widget]
     @override
@@ -35,9 +47,21 @@ class Search extends StatelessWidget {
                     ),
 
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: EdgeInsets.symmetric(vertical: 10),
                         child: Column(
                             children: <Widget>[
+
+                                // Implements SearchBar widget
+                                Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    child: SearchBar(parent: this),
+                                ),
+
+                                // Display results of research
+                                SearchResults(
+                                    key: Key("search_results"),
+                                    parent: this,
+                                )
 
                             ],
                         ),

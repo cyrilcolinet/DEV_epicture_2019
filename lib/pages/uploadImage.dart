@@ -86,14 +86,6 @@ class _UploadImage extends State<UploadImage> {
                             fontFamily: "Calibre-Semibold",
                             letterSpacing: 1.0,
                         ),
-                        onChanged: (String text) {
-                            if (text.length == 0) {
-                                print("Not display");
-                                return;
-                            }
-
-                            print("Display");
-                        },
                     ),
 
                     SizedBox(height: 10),
@@ -132,43 +124,40 @@ class _UploadImage extends State<UploadImage> {
     /// Before all, check if image is loaded (VERY IMPORTANT) and post it to view
     Widget displayContent(UploadImageArguments args) {
         return SingleChildScrollView(
-            child: GestureDetector(
-                onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
-                child: Column(
-                    children: <Widget>[
+            child: Column(
+                children: <Widget>[
 
-                        Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                            child: Column(
-                                children: <Widget>[
-                                    // Display image
-                                    this.displayImage(context, args),
+                    Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        child: Column(
+                            children: <Widget>[
+                                // Display image
+                                this.displayImage(context, args),
 
-                                    // Set description and title
-                                    Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Padding(
-                                            padding: EdgeInsets.only(top: 20,),
-                                            child: Text("Title & Description",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 30.0,
-                                                    fontFamily: "Calibre-Semibold",
-                                                    letterSpacing: 1.0,
-                                                )
-                                            ),
+                                // Set description and title
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Padding(
+                                        padding: EdgeInsets.only(top: 20,),
+                                        child: Text("Title & Description",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 30.0,
+                                                fontFamily: "Calibre-Semibold",
+                                                letterSpacing: 1.0,
+                                            )
                                         ),
                                     ),
+                                ),
 
-                                    // Text field
-                                    this.displayTextFields(context),
+                                // Text field
+                                this.displayTextFields(context),
 
-                                    SizedBox(height: 70)
-                                ],
-                            ),
+                                SizedBox(height: 70)
+                            ],
                         ),
-                    ],
-                ),
+                    ),
+                ],
             ),
         );
     }

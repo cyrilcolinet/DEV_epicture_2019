@@ -20,11 +20,14 @@ class Layout extends StatelessWidget {
     Widget build(BuildContext context) {
         return CustomBottomNavigationBar(
             floatingMethod: this.floatingMethod,
-            child: Container(
-                decoration: BoxDecoration(
-                    color: Color(0xFF1b1e44),
+            child: GestureDetector(
+                onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: Color(0xFF1b1e44),
+                    ),
+                    child: this.body
                 ),
-                child: this.body
             ),
         );
     }

@@ -157,7 +157,8 @@ class CardScrollFeed extends StatelessWidget {
     }
 
     /// Build content as list
-    @override Widget build(BuildContext context) {
+    @override
+    Widget build(BuildContext context) {
         return SizedBox(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height - 170,
