@@ -4,6 +4,7 @@ import 'package:Epicture/utils/request.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:intl/intl.dart';
 
 class CommentsList extends StatefulWidget {
     final String id;
@@ -111,7 +112,9 @@ class _CommentsList extends State<CommentsList> {
                                     SizedBox(
                                         height: 40,
                                         width: 40,
-                                        child: AccountProfileImage(accountName: this.comments[index].author),
+                                        child: AccountProfileImage(
+                                            accountName: this.comments[index].author
+                                        ),
                                     ),
                                     SizedBox(width: 15.0),
                                     Column(
@@ -125,7 +128,7 @@ class _CommentsList extends State<CommentsList> {
                                                     fontWeight: FontWeight.w400,
                                                 ),
                                             ),
-                                            Text(DateTime.fromMicrosecondsSinceEpoch(this.comments[index].datetime * 1000).toString(),
+                                            Text(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.fromMillisecondsSinceEpoch(this.comments[index].datetime * 1000)),
                                                 style: TextStyle(color: Colors.black54),
                                             ),
                                         ],
