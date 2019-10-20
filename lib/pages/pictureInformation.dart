@@ -6,16 +6,10 @@ import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/objects/arguments/pictureInformationArguments.dart';
 import 'package:flutter/material.dart';
 
-/// PictureInformation for one picture in particularity
-/// Extended from [StatefulWidget]
-class PictureInformation extends StatefulWidget {
-    _PictureInformation createState() => _PictureInformation();
-}
-
 /// State creator of the [PictureInformation] class
 /// Extended from class [State] and applying setState function
 /// Returns a [Widget] to display content
-class _PictureInformation extends State<PictureInformation> {
+class PictureInformation extends StatelessWidget {
 
     /// Display image
     /// Return [Widget]
@@ -70,23 +64,20 @@ class _PictureInformation extends State<PictureInformation> {
                 // User
                 Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: InkWell(
-                        onTap: () {},
-                        child: Row(
-                            children: <Widget>[
-                                Icon(Icons.person,
-                                    size: 25,
-                                    color: Colors.grey,
+                    child: Row(
+                        children: <Widget>[
+                            Icon(Icons.person,
+                                size: 25,
+                                color: Colors.grey,
+                            ),
+                            SizedBox(width: 10),
+                            Text(args.image.accountUrl,
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white
                                 ),
-                                SizedBox(width: 10),
-                                Text(args.image.accountUrl,
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.white
-                                    ),
-                                )
-                            ],
-                        ),
+                            )
+                        ],
                     ),
                 ),
 
@@ -94,7 +85,9 @@ class _PictureInformation extends State<PictureInformation> {
         );
     }
 
-    @override Widget build(BuildContext context) {
+    /// Build as a [Widget]
+    @override
+    Widget build(BuildContext context) {
         final PictureInformationArguments args = ModalRoute.of(context).settings.arguments;
 
         // Return display of content
