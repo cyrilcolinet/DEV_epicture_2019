@@ -1,4 +1,3 @@
-import 'package:Epicture/objects/image.dart' as object;
 import 'package:Epicture/utils/request.dart';
 import 'package:flutter/material.dart';
 
@@ -6,14 +5,14 @@ import 'package:flutter/material.dart';
 /// Extended to [StatefulWidget]
 class FavButton extends StatefulWidget {
 
-    final object.Image image;
+    final dynamic image;
     final List<String> links;
 
     /// Constructor
     FavButton({this.image, this.links});
 
     // Create state to rebuild simple
-    _FavButton createState() => _FavButton(this.image, this.links);
+    _FavButton createState() => _FavButton();
 }
 
 /// State creator of the [FavButton] class
@@ -21,37 +20,29 @@ class FavButton extends StatefulWidget {
 /// Returns a [Widget] to display content
 class _FavButton extends State<FavButton> with TickerProviderStateMixin {
 
-    final object.Image image;
-    final List<String> links;
-
-    /// Constructor
-    _FavButton(this.image, this.links);
-
     /// Action triggered when user click to "fav" button
     /// Just like picture and change colors and icon
     void favImage() {
-        if (image.images[0].favorite) {
-            print("true");
-            postRequest("/image/" + image.images[0].id + "/favorite");
+        if (this.widget.image.images[0].favorite) {
+            postRequest("/image/" + this.widget.image.images[0].id + "/favorite");
             setState(() {
-                links.remove(image.images[0].link);
-                image.images[0].favorite = false;
-                image.favoriteCount -= 1;
+                this.widget.links.remove(this.widget.image.images[0].link);
+                this.widget.image.images[0].favorite = false;
+                this.widget.image.favoriteCount -= 1;
             });
             return;
         }
-        print("false");
-        postRequest("/image/" + image.images[0].id + "/favorite");
+        postRequest("/image/" + this.widget.image.images[0].id + "/favorite");
         setState(() {
-            image.images[0].favorite = !image.images[0].favorite;
-            image.favoriteCount += 1;
+            this.widget.image.images[0].favorite = !this.widget.image.images[0].favorite;
+            this.widget.image.favoriteCount += 1;
         });
     }
 
     /// Build (and re-build) widget
     @override Widget build(BuildContext context) {
-      if (links.contains(image.images[0].link))
-        image.images[0].favorite = true;
+      if (this.widget.links.contains(this.widget.image.images[0].link))
+          this.widget.image.images[0].favorite = true;
 
       return Container(
             child: Align(
@@ -67,8 +58,8 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
                                 padding: EdgeInsets.all(0.0),
                                 //alignment: Alignment.centerLeft,
                                 splashColor: Colors.transparent,
-                                icon: Icon((image.images[0].favorite ? Icons.favorite : Icons.favorite_border),
-                                    color: (image.images[0].favorite ? Colors.red : Colors.grey),
+                                icon: Icon((this.widget.image.images[0].favorite ? Icons.favorite : Icons.favorite_border),
+                                    color: (this.widget.image.images[0].favorite ? Colors.red : Colors.grey),
                                     size: 25.0,
                                 ),
                                 onPressed: this.favImage,
@@ -76,7 +67,7 @@ class _FavButton extends State<FavButton> with TickerProviderStateMixin {
                         ),
 
                         // Text
-                        Text(this.image.favoriteCount.toString(),
+                        Text(this.widget.image.favoriteCount.toString(),
                             style: TextStyle(
                                 fontSize: 18,
                                 color: Colors.white

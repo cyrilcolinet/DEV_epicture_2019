@@ -1,19 +1,21 @@
 import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/imageGridTile.dart';
 import 'package:Epicture/components/layout.dart';
-import 'package:Epicture/components/masonryView.dart';
-import 'package:Epicture/objects/arguments/pictureInformationArguments.dart';
 import 'package:Epicture/objects/image.dart' as object;
 import 'package:Epicture/utils/request.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+/// Class extended from [StatefulWidget]
+/// This class create a page with all favorites pictures
 class FavPictures extends StatefulWidget {
     @override
     _FavPicturesState createState() => _FavPicturesState();
 }
 
+/// State creator of the [FavPictures] class
+/// Extended from class [State] and applying setState function
+/// Returns a [Widget] to display content
 class _FavPicturesState extends State<FavPictures> {
     bool loaded = false;
     List<object.Images> images = [];
@@ -43,9 +45,10 @@ class _FavPicturesState extends State<FavPictures> {
     void initState() {
         super.initState();
 
+        // Get favorites images and reload
         parseAccountPictures().then((res) => this.setState(() {
-            images = res;
-            loaded = true;
+            this.images = res;
+            this.loaded = true;
         }));
     }
 
@@ -100,7 +103,10 @@ class _FavPicturesState extends State<FavPictures> {
                                                 height: MediaQuery.of(context).size.height - 200,
                                                 child: GridView.count(
                                                     children: List.generate(this.images.length, (int index) {
-                                                        return ImageGridTile(image: this.images[index]);
+                                                        return ImageGridTile(
+                                                            image: this.images[index],
+                                                            seeMoreRoute: '/favoritePictureInformation',
+                                                        );
                                                     }),
                                                     crossAxisCount: 3,
                                                 )

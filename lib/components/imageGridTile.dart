@@ -11,9 +11,10 @@ class ImageGridTile extends StatelessWidget {
 
     /// Class variables
     final dynamic image;
+    final String seeMoreRoute;
 
     /// Constructor
-    ImageGridTile({@required this.image});
+    ImageGridTile({@required this.image, this.seeMoreRoute});
 
     /// See more action as a [Function]
     /// Pass parameter [object.Image] in route to get data without requesting
@@ -26,6 +27,10 @@ class ImageGridTile extends StatelessWidget {
                     arguments: PictureInformationArguments(image));
                 return;
             }
+
+            // Redirect by route
+            Navigator.pushNamed(context, this.seeMoreRoute,
+                arguments: PictureInformationArguments(image));
         };
     }
 

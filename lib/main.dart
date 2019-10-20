@@ -1,6 +1,7 @@
 import 'package:Epicture/pages/account.dart';
 import 'package:Epicture/pages/dashboard.dart';
 import 'package:Epicture/pages/favPictures.dart';
+import 'package:Epicture/pages/favoritePictureInformation.dart';
 import 'package:Epicture/pages/login.dart';
 import 'package:Epicture/pages/pictureInformation.dart';
 import 'package:Epicture/pages/search.dart';
@@ -42,7 +43,8 @@ class Epicture extends StatelessWidget {
               '/fav': (context) => FavPictures(),
               '/search': (context) => Search(),
               '/pictureInformation': (context) => PictureInformation(),
-              '/uploadImage': (context) => UploadImage()
+              '/uploadImage': (context) => UploadImage(),
+              '/favoritePictureInformation': (context) => FavoritePictureInformation()
           },
       );
   }

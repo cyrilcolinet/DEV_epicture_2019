@@ -3,6 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+/// Class extended to [StatefulWidget]
+/// This class create a image and call Imgur to get the accountAvatar URL and
+/// display it a image
 class AccountProfileImage extends StatefulWidget {
 
     // Class variables
@@ -15,6 +18,9 @@ class AccountProfileImage extends StatefulWidget {
     _AccountProfileImage createState() => _AccountProfileImage();
 }
 
+/// State creator of the [AccountProfileImage] class
+/// Extended from class [State] and applying setState function
+/// Returns a [Widget] to display content
 class _AccountProfileImage extends State<AccountProfileImage> {
 
     /// Class variables
@@ -52,6 +58,7 @@ class _AccountProfileImage extends State<AccountProfileImage> {
             );
         }
 
+        // Content loaded, send it to cache :)
         return ClipRRect(
             borderRadius: BorderRadius.circular(30),
             child: Container(

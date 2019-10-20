@@ -212,6 +212,7 @@ class Tags {
 /// Images class
 class Images {
     String id;
+    String title;
     String description;
     int datetime;
     String type;
@@ -225,6 +226,10 @@ class Images {
     bool isAd;
     bool inMostViral;
     bool hasSound;
+    String accountUrl;
+    String vote;
+    int ups;
+    int downs;
     List<Tags> tags;
     int adType;
     String adUrl;
@@ -240,16 +245,17 @@ class Images {
     int favoriteCount;
 
     /// Constructor
-    Images({this.id, this.description, this.datetime, this.type,
+    Images({this.id, this.title, this.description, this.datetime, this.type,
         this.animated, this.width, this.height, this.size, this.views,
         this.bandwidth, this.favorite, this.isAd, this.inMostViral,
-        this.hasSound, this.tags, this.adType, this.adUrl, this.edited,
+        this.hasSound, this.accountUrl, this.vote, this.tags, this.adType, this.adUrl, this.edited,
         this.inGallery, this.link, this.mp4, this.gifv, this.hls, this.mp4Size,
         this.looping, this.processing, this.favoriteCount});
 
     /// Construct from jso
     Images.fromJson(Map<String, dynamic> json) {
         id = json['id'];
+        title = json['title'];
         description = json['description'];
         datetime = json['datetime'];
         type = json['type'];
@@ -263,6 +269,10 @@ class Images {
         isAd = json['is_ad'];
         inMostViral = json['in_most_viral'];
         hasSound = json['has_sound'];
+        accountUrl = json['account_url'];
+        vote = json['vote'];
+        ups = json['ups'];
+        downs = json['downs'];
         if (json['tags'] != null) {
             tags = new List<Tags>();
             json['tags'].forEach((v) { tags.add(new Tags.fromJson(v)); });
@@ -285,6 +295,7 @@ class Images {
     Map<String, dynamic> toJson() {
         final Map<String, dynamic> data = new Map<String, dynamic>();
         data['id'] = this.id;
+        data['title'] = this.title;
         data['description'] = this.description;
         data['datetime'] = this.datetime;
         data['type'] = this.type;
@@ -298,6 +309,10 @@ class Images {
         data['is_ad'] = this.isAd;
         data['in_most_viral'] = this.inMostViral;
         data['has_sound'] = this.hasSound;
+        data['account_url'] = this.accountUrl;
+        data['vote'] = this.vote;
+        data['ups'] = this.ups;
+        data['downs'] = this.downs;
         if (this.tags != null)
             data['tags'] = this.tags.map((v) => v.toJson()).toList();
         data['ad_type'] = this.adType;

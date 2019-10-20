@@ -2,11 +2,9 @@ import 'package:Epicture/components/accountResume.dart';
 import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/imageGridTile.dart';
 import 'package:Epicture/components/layout.dart';
-import 'package:Epicture/components/masonryView.dart';
-import 'package:Epicture/objects/accountImage.dart';
+import 'package:Epicture/objects/image.dart';
 import 'package:Epicture/objects/user.dart';
 import 'package:Epicture/utils/request.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,8 +20,7 @@ class Account extends StatefulWidget {
 class _Account extends State<Account> {
     bool loaded = false;
     User userData;
-    List<AccountImage> images = [];
-    List<TileSize> tileSizes = [];
+    List<Images> images = [];
 
     /// Get data futures to one future
     /// Return [Future] of user data and profile pictures
@@ -36,21 +33,17 @@ class _Account extends State<Account> {
         Future request = getRequest("/account/me/images", "data");
 
         return request.then((data) {
-            List<AccountImage> tmpImages = [];
+            List<Images> tmpImages = [];
             List<dynamic> values = data["data"];
-            List<TileSize> sizes = [];
 
             // Get all images
             values.forEach((tmp) {
-                AccountImage image = AccountImage.fromJson(tmp);
+                Images image = Images.fromJson(tmp);
 
                 // Check for valid type of codec
                 if (image.type.startsWith("image")) {
                     image.link = image.link;
                     tmpImages.add(image);
-
-                    // Configure size of tile
-                    tileSizes.add(new TileSize(1, 1.0));
                 }
             });
 
