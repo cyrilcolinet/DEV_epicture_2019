@@ -2,9 +2,7 @@ import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/components/searchBar.dart';
 import 'package:Epicture/components/searchResults.dart';
-import 'package:Epicture/utils/request.dart';
 import 'package:flutter/material.dart';
-import 'package:Epicture/objects/image.dart' as object;
 
 /// Search class with search bar and results
 class Search extends StatelessWidget {

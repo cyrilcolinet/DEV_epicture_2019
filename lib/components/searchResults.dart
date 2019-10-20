@@ -47,7 +47,7 @@ class _SearchResults extends State<SearchResults> {
         if (req.length < 3 || lastResearch == req)
             return;
 
-        String url = "/gallery/search/viral/all/0?q=" + req;
+        String url = "/gallery/search/viral/all/0?q_all=" + req;
         Future<Map<String, dynamic>> request = getRequest(url, "data");
         List<object.Image> tmpImages = [];
 

@@ -1,6 +1,7 @@
 import 'package:Epicture/components/buttons/favButton.dart';
 import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/buttons/voteButton.dart';
+import 'package:Epicture/components/commentsList.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/objects/arguments/pictureInformationArguments.dart';
 import 'package:flutter/material.dart';
@@ -145,6 +146,24 @@ class _PictureInformation extends State<PictureInformation> {
 
                                         // Display buttons and more
                                         this.displayButtonsAndUser(args),
+
+                                        // Comments
+                                        Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Padding(
+                                                padding: EdgeInsets.only(top: 20, bottom: 10, left: 20),
+                                                child: Text("Comments",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 30.0,
+                                                        fontFamily: "Calibre-Semibold",
+                                                        letterSpacing: 1.0,
+                                                    )
+                                                ),
+                                            ),
+                                        ),
+
+                                        CommentsList(id: args.image.id)
                                     ],
                                 ),
                             )
