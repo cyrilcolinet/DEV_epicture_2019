@@ -150,35 +150,71 @@ class _CommentsList extends State<CommentsList> {
 
     /// Detect if link is url, and display image
     Widget displayCommentOrGif(Comment comment) {
-        try {
-            bool isUrl = Uri.parse(comment.comment).isAbsolute;
+        RegExp regex = RegExp(r"\bhttps?:\/\/\S+", caseSensitive: false);
+        String url = regex.stringMatch(comment.comment);
+        String commentText = comment.comment;
 
-            // If comment is only url, display it
-            if (isUrl) {
-                var parts = comment.comment.split('.');
-                var extension = parts[parts.length - 1];
-                var imageTypes = ['jpg', 'jpeg', 'tiff', 'png', 'gif', 'bmp'];
+        // Check for valid url
+        if (this.validUriAndDisplayableAsImage(url)) {
+            commentText = commentText.replaceAll(url, "");
 
-                // Check if image can be displayed
-                if (imageTypes.indexOf(extension) != -1) {
-                    return ClipRRect(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(10),
-                            bottomRight: Radius.circular(10)
+            // Contains text
+            if (commentText.trim().length != 0) {
+                return Column(
+                    children: <Widget>[
+
+                        // Display text
+                        Padding(
+                            padding: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+                            child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: Text(commentText,
+                                    style: TextStyle(
+                                        color: Colors.black54,
+                                        fontSize: 15
+                                    ),
+                                ),
+                            ),
                         ),
-                        child: CachedNetworkImage(
-                            imageUrl: comment.comment,
-                            placeholder: (BuildContext context, String str) {
-                                return SpinKitFadingCube(
-                                    color: Colors.black26,
-                                    size: 30,
-                                );
-                            },
-                        ),
-                    );
-                }
+
+                        // Display image
+                        ClipRRect(
+                            borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(10),
+                                bottomRight: Radius.circular(10)
+                            ),
+                            child: CachedNetworkImage(
+                                imageUrl: url,
+                                placeholder: (BuildContext context, String str) {
+                                    return SpinKitFadingCube(
+                                        color: Colors.black26,
+                                        size: 30,
+                                    );
+                                },
+                            ),
+                        )
+
+                    ],
+                );
             }
-        } catch(ignored) {}
+
+            // Just display image
+            return ClipRRect(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(10),
+                    bottomRight: Radius.circular(10)
+                ),
+                child: CachedNetworkImage(
+                    imageUrl: url,
+                    placeholder: (BuildContext context, String str) {
+                        return SpinKitFadingCube(
+                            color: Colors.black26,
+                            size: 30,
+                        );
+                    },
+                ),
+            );
+        }
 
         // Just display comment
         return Padding(
@@ -193,5 +229,24 @@ class _CommentsList extends State<CommentsList> {
                 ),
             ),
         );
+    }
+
+    bool validUriAndDisplayableAsImage(String text) {
+        try {
+            bool isUrl = Uri.parse(text).isAbsolute;
+
+            // If comment is only url, display it
+            if (isUrl) {
+                var parts = text.split('.');
+                var extension = parts[parts.length - 1];
+                var imageTypes = ['jpg', 'jpeg', 'tiff', 'png', 'gif', 'bmp'];
+
+                // Check if image can be displayed
+                if (imageTypes.indexOf(extension) != -1)
+                    return true;
+            }
+        } catch(ignored) {}
+
+        return false;
     }
 }
