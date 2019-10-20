@@ -96,7 +96,7 @@ class _SearchResults extends State<SearchResults> {
         // Currently searching
         if (loading) {
             return Padding(
-                padding: EdgeInsets.only(top: 100),
+                padding: EdgeInsets.only(top: 200, bottom: 10),
                 child: Align(
                     alignment: Alignment.center,
                     child: SpinKitFadingCube(
