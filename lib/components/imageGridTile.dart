@@ -1,3 +1,5 @@
+import 'package:Epicture/objects/arguments/pictureInformationArguments.dart';
+import 'package:Epicture/objects/image.dart' as object;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,12 +15,18 @@ class ImageGridTile extends StatelessWidget {
     /// Constructor
     ImageGridTile({@required this.image});
 
-    void onTap() {
-
-    }
-
-    void onDoubleTap() {
-
+    /// See more action as a [Function]
+    /// Pass parameter [object.Image] in route to get data without requesting
+    /// Render new page called [PictureInformation]
+    Function seeMoreAction(BuildContext context, dynamic image) {
+        return () {
+            // If main image object
+            if (this.image is object.Image) {
+                Navigator.pushNamed(context, '/pictureInformation',
+                    arguments: PictureInformationArguments(image));
+                return;
+            }
+        };
     }
 
     @override
@@ -26,8 +34,7 @@ class ImageGridTile extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.only(left: 5, right: 5, bottom: 10),
             child: GestureDetector(
-                onTap: this.onTap,
-                onDoubleTap: this.onDoubleTap,
+                onTap: this.seeMoreAction(context, this.image),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(5),
                     child: Container(

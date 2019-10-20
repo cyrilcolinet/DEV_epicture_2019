@@ -2,6 +2,7 @@ import 'package:Epicture/components/buttons/goToHomeButton.dart';
 import 'package:Epicture/components/imageGridTile.dart';
 import 'package:Epicture/components/layout.dart';
 import 'package:Epicture/components/masonryView.dart';
+import 'package:Epicture/objects/arguments/pictureInformationArguments.dart';
 import 'package:Epicture/objects/image.dart' as object;
 import 'package:Epicture/utils/request.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -16,8 +17,9 @@ class FavPictures extends StatefulWidget {
 class _FavPicturesState extends State<FavPictures> {
     bool loaded = false;
     List<object.Images> images = [];
-    List<TileSize> tileSizes = [];
 
+    /// Parse account pictures and get favorites
+    /// Return a [Future] of [object.Images]
     Future<List<object.Images>> parseAccountPictures() {
         Future request = getRequest("/account/me/favorites/", "data");
 
@@ -28,17 +30,15 @@ class _FavPicturesState extends State<FavPictures> {
             // Get all images
             values.forEach((tmp) {
                 object.Images image = object.Images.fromJson(tmp);
-                if (image.type.startsWith("image")) {
-                    image.link = image.link;
+                if (image.type.startsWith("image"))
                     tmpImages.add(image);
-                    tileSizes.add(new TileSize(2, 2.0));
-                }
             });
 
             return tmpImages;
         });
     }
 
+    /// Rebuild state
     @override
     void initState() {
         super.initState();
@@ -49,31 +49,30 @@ class _FavPicturesState extends State<FavPictures> {
         }));
     }
 
+    /// Build a main [Widget]
     @override
     Widget build(BuildContext context) {
         return Layout(body: this.displayContent());
     }
 
+    /// Display content as a [Widget]
     Widget displayContent() {
         if (!loaded) {
             return SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height - 130,
+                height: MediaQuery.of(context).size.height - 130,
                 child: SpinKitFadingCube(
                     color: Colors.white,
                     size: 60,
                 ),
             );
         }
+
         return SingleChildScrollView(
             child: Column(
                 children: <Widget>[
                     Padding(
                         padding: EdgeInsets.only(top: 20),
                         child: Row(
-                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: <Widget>[
                                 GoToHomeButton(),
                                 Text("Favourites",

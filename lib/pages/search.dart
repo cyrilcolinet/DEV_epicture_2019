@@ -59,7 +59,9 @@ class Search extends StatelessWidget {
                                 SearchResults(
                                     key: Key("search_results"),
                                     parent: this,
-                                )
+                                ),
+
+                                SizedBox(height: 50)
 
                             ],
                         ),

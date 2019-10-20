@@ -119,21 +119,24 @@ class _CommentsList extends State<CommentsList> {
                                         ),
                                     ),
                                     SizedBox(width: 15.0),
-                                    Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                            Text(this.comments[index].author,
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 18.0,
-                                                    fontWeight: FontWeight.w400,
+                                    Expanded(
+                                        child: Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: <Widget>[
+                                                Text(this.comments[index].author,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 18.0,
+                                                        fontWeight: FontWeight.w400,
+                                                    ),
                                                 ),
-                                            ),
-                                            Text(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.fromMillisecondsSinceEpoch(this.comments[index].datetime * 1000)),
-                                                style: TextStyle(color: Colors.black54),
-                                            ),
-                                        ],
+                                                Text(DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.fromMillisecondsSinceEpoch(this.comments[index].datetime * 1000)),
+                                                    style: TextStyle(color: Colors.black54),
+                                                ),
+                                            ],
+                                        ),
                                     )
                                 ],
                             ),
