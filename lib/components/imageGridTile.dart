@@ -29,6 +29,7 @@ class ImageGridTile extends StatelessWidget {
         };
     }
 
+    /// Build as a [Widget]
     @override
     Widget build(BuildContext context) {
         return Padding(

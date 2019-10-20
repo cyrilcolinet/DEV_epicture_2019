@@ -9,9 +9,6 @@ class Layout extends StatelessWidget {
     final Widget body;
     final Function floatingMethod;
 
-    // Class variables
-    int selectedPage = 0;
-
     // Constructor
     Layout({@required this.body, this.floatingMethod});
 
@@ -21,7 +18,7 @@ class Layout extends StatelessWidget {
         return CustomBottomNavigationBar(
             floatingMethod: this.floatingMethod,
             child: GestureDetector(
-                onTap: () => FocusScope.of(context).requestFocus(new FocusNode()),
+                onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
                 child: Container(
                     decoration: BoxDecoration(
                         color: Color(0xFF1b1e44),
