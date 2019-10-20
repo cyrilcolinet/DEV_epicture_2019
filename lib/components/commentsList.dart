@@ -53,11 +53,14 @@ class _CommentsList extends State<CommentsList> {
     Widget build(BuildContext context) {
         // Currently requesting comments list
         if (!loaded) {
-            return Align(
-                alignment: Alignment.center,
-                child: SpinKitFadingCube(
-                    color: Colors.white,
-                    size: 60,
+            return Padding(
+                padding: EdgeInsets.only(bottom: 20, top: 30),
+                child: Align(
+                    alignment: Alignment.center,
+                    child: SpinKitFadingCube(
+                        color: Colors.white,
+                        size: 40,
+                    ),
                 ),
             );
         }
@@ -91,7 +94,6 @@ class _CommentsList extends State<CommentsList> {
         return Padding(
             padding: EdgeInsets.only(bottom: 10),
             child: Container(
-                //padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(10.0),
