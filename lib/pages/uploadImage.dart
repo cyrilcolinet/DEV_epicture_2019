@@ -155,7 +155,7 @@ class _UploadImage extends State<UploadImage> {
 
                                 SizedBox(height: 70)
                             ],
-                        ),
+                         ),
                     ),
                 ],
             ),
@@ -171,7 +171,7 @@ class _UploadImage extends State<UploadImage> {
             body: this.displayContent(args),
             floatingMethod: () {
                 if (this.name.text.length == 0)
-                    return;
+                    this.name.text = "untitled";
 
                 // Show loader dialog
                 showDialog(
